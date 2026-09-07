@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="9/12 渋谷ロゲイニングから 9/13 白馬トレイルランまで、相方との合流・風呂・荷物・移動を1枚にまとめた行動計画。">
+<meta name="description" content="9/12 渋谷ロゲイニングから 9/13 白馬トレイルランまで、風呂・荷物・移動の接続を1枚にまとめた行動計画。">
 <title>渋谷から白馬へ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -161,22 +161,6 @@ section{margin-top:56px}
   background:var(--alp-soft);border:1px solid var(--alp-2);color:var(--alp);
 }
 
-/* ---------- ask cards ---------- */
-.asks{display:grid;gap:12px}
-.ask{
-  display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
-  background:var(--surface);border:1px solid var(--line);border-radius:4px;
-  padding:17px 19px;box-shadow:var(--shadow);
-}
-.ask .n{
-  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#fff;
-  background:var(--city);width:26px;height:26px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;margin-top:2px;flex:0 0 auto;
-}
-.ask h3{font-size:16.5px;margin-bottom:5px;line-height:1.5}
-.ask p{margin:0;font-size:13.8px;color:var(--ink-2)}
-.ask p + p{margin-top:6px}
-
 /* ---------- tags ---------- */
 .tag{
   display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;
@@ -282,7 +266,7 @@ td strong{font-weight:700}
     <p class="lede">
       土曜は渋谷でロゲイニング、日曜の朝9時には白馬でトレイルランのスタートライン。
       宿・エントリー・新幹線・車はすべて手配済みなので、残っているのは
-      <b>渋谷から大宮へ向かう途中でどこの風呂に入るか</b>と、<b>相方との合流</b>だけ。
+      <b>渋谷から大宮へ向かう途中でどこの風呂に入るか</b>だけ。
     </p>
     <div class="anchors">
       <div class="anchor city"><span class="k">Sat 解散</span><span class="v"><span class="v5">15:15</span><span class="v3">14:15</span></span></div>
@@ -341,40 +325,9 @@ td strong{font-weight:700}
     </div>
   </section>
 
-  <!-- ============ 1. 相方と ============ -->
-  <section id="pair">
-    <div class="sec-head"><span class="num">01</span><h2>相方と決めること</h2></div>
-    <p class="sec-note">
-      部門が違うので<b>解散が1時間ずれる</b>。3時間の部は 14:15、5時間の部は 15:15。詰めるのはこの3点だけ。
-    </p>
-    <div class="asks">
-      <div class="ask">
-        <div class="n">1</div>
-        <div>
-          <h3>14:15–15:15 の1時間、どこで待つか</h3>
-          <p>3時間の部が終わってから、5時間の部の表彰が終わるまでの1時間。会場（幸和ビル4F）で待つのか、渋谷のどこかで時間を潰すのか。<b>15:25 にロッカー前で合流</b>できれば形はどうでもいい。</p>
-        </div>
-      </div>
-      <div class="ask">
-        <div class="n">2</div>
-        <div>
-          <h3>風呂はどこにするか — §03 の3候補から選ぶ</h3>
-          <p>渋谷から大宮へ向かう<b>湘南新宿ラインの停車駅の上</b>で選んである。新宿・池袋・赤羽の3つ。値段が銭湯価格（550円）かスパ価格（2,800〜3,200円）かで印象が変わるので、そこだけ先に合わせたい。</p>
-        </div>
-      </div>
-      <div class="ask">
-        <div class="n">3</div>
-        <div>
-          <h3>ロッカーの場所を揃える</h3>
-          <p>別々の改札に預けると 15:25 の合流が崩れる。<b>東京メトロ 宮益坂中央改札付近</b>（会場と同じ渋谷駅東側・大型あり）に揃えるのが素直。詳細と事前予約の手段は §03。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ 2. Day 1 ============ -->
   <section id="day1">
-    <div class="sec-head"><span class="num">02</span><h2>9/12（土）— 渋谷 → 大宮 → 白馬</h2></div>
+    <div class="sec-head"><span class="num">01</span><h2>9/12（土）— 渋谷 → 大宮 → 白馬</h2></div>
 
     <div class="day-band">
       <span class="badge">DAY 1</span>
@@ -422,7 +375,7 @@ td strong{font-weight:700}
         <div class="t">14:15</div>
         <div class="c">
           <h3>1時間の待ち — 5時間の部が終わるまで</h3>
-          <p>過ごし方は §01-1 で相談。</p>
+          <p>ここは相方の待ち時間。15:25 に合流できれば過ごし方は自由。</p>
         </div>
       </li>
       <li class="key merge">
@@ -480,7 +433,7 @@ td strong{font-weight:700}
 
   <!-- ============ 3. 風呂 ============ -->
   <section id="bath">
-    <div class="sec-head"><span class="num">03</span><h2>風呂 — 渋谷 → 大宮の途中</h2></div>
+    <div class="sec-head"><span class="num">02</span><h2>風呂 — 渋谷 → 大宮の途中</h2></div>
     <p class="sec-note">
       条件は「<b>湘南新宿ラインの停車駅から歩ける</b>」「<b>土曜の16時台に開いている</b>」「<b>17:00に出れば大宮 17:49 に間に合う</b>」の3つ。
       渋谷で最有力の改良湯は土曜が定休、中目黒の光明泉は大宮と逆方向なので、どちらも外してある。
@@ -516,7 +469,7 @@ td strong{font-weight:700}
 
   <!-- ============ 4. ロッカー ============ -->
   <section id="locker">
-    <div class="sec-head"><span class="num">04</span><h2>渋谷のロッカー</h2></div>
+    <div class="sec-head"><span class="num">03</span><h2>渋谷のロッカー</h2></div>
     <p class="sec-note">
       レース用ザック＋着替え＋レインウェアが入るので <b>大〜特大が要る</b>。土曜の渋谷は埋まりやすい。
     </p>
@@ -568,7 +521,7 @@ td strong{font-weight:700}
 
   <!-- ============ 5. Day 2 ============ -->
   <section id="day2">
-    <div class="sec-head"><span class="num">05</span><h2>9/13（日）— 白馬</h2></div>
+    <div class="sec-head"><span class="num">04</span><h2>9/13（日）— 白馬</h2></div>
 
     <div class="day-band alp">
       <span class="badge">DAY 2</span>
