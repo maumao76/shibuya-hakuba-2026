@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="9/12 渋谷ロゲイニングから 9/13 白馬トレイルランまで、風呂・荷物・列車の接続を1枚にまとめた行動計画。">
+<title>渋谷から白馬へ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#f4f5f2;
+  --surface:#ffffff;
+  --surface-2:#ebeee8;
+  --line:#dee1da;
+  --line-strong:#c4c9bf;
+  --ink:#191c1e;
+  --ink-2:#4b5158;
+  --muted:#7b828a;
+  --city:#2e3f6b;
+  --city-2:#5c6f9e;
+  --city-soft:#e4e9f3;
+  --alp:#156b5e;
+  --alp-2:#3f9384;
+  --alp-soft:#dbece7;
+  --alert:#a2382a;
+  --alert-soft:#f7e3dd;
+  --shadow:0 1px 2px rgba(25,28,30,.05), 0 10px 28px rgba(25,28,30,.055);
+  --rail:2px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121518;
+    --surface:#1a1e22;
+    --surface-2:#21262b;
+    --line:#2c3239;
+    --line-strong:#3c434b;
+    --ink:#e9ece8;
+    --ink-2:#b2b9bf;
+    --muted:#848c94;
+    --city:#97aade;
+    --city-2:#7288c2;
+    --city-soft:#1e2740;
+    --alp:#5fc3ae;
+    --alp-2:#40988a;
+    --alp-soft:#0f2f28;
+    --alert:#e08c74;
+    --alert-soft:#3a1e17;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 28px rgba(0,0,0,.28);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121518;
+  --surface:#1a1e22;
+  --surface-2:#21262b;
+  --line:#2c3239;
+  --line-strong:#3c434b;
+  --ink:#e9ece8;
+  --ink-2:#b2b9bf;
+  --muted:#848c94;
+  --city:#97aade;
+  --city-2:#7288c2;
+  --city-soft:#1e2740;
+  --alp:#5fc3ae;
+  --alp-2:#40988a;
+  --alp-soft:#0f2f28;
+  --alert:#e08c74;
+  --alert-soft:#3a1e17;
+  --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 28px rgba(0,0,0,.28);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:'Zen Kaku Gothic New','Hiragino Sans','Yu Gothic UI',system-ui,sans-serif;
+  font-size:15px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--alp);outline-offset:2px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.wrap{max-width:940px;margin:0 auto;padding:0 22px 80px}
+h1,h2,h3{font-family:'Zen Old Mincho','Yu Mincho',serif;font-weight:600;text-wrap:balance;margin:0}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}
+
+/* ---------- hero ---------- */
+.hero{border-bottom:1px solid var(--line);background:var(--surface);}
+.hero-in{max-width:940px;margin:0 auto;padding:52px 22px 38px}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 14px;
+}
+.hero h1{font-size:clamp(32px,6vw,46px);line-height:1.28;letter-spacing:.02em}
+.hero .lede{max-width:60ch;color:var(--ink-2);margin:16px 0 0;font-size:15.5px}
+.anchors{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.anchor{
+  display:flex;flex-direction:column;gap:2px;padding:10px 15px;
+  border:1px solid var(--line);border-radius:3px;background:var(--ground);min-width:132px;
+}
+.anchor .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.anchor .v{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.anchor.city .v{color:var(--city)}
+.anchor.alp .v{color:var(--alp)}
+
+/* ---------- section frame ---------- */
+section{margin-top:56px}
+.sec-head{display:flex;align-items:baseline;gap:14px;padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.sec-head h2{font-size:23px;letter-spacing:.02em}
+.sec-head .num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:.1em}
+.sec-note{color:var(--ink-2);font-size:14px;margin:-10px 0 22px;max-width:66ch}
+
+/* ---------- decision cards ---------- */
+.decisions{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
+.dec{
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  padding:18px 19px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;
+}
+.dec h3{font-size:16.5px;line-height:1.5}
+.dec p{margin:0;font-size:13.8px;color:var(--ink-2)}
+.dec .verdict{
+  margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);
+  font-size:13.5px;font-weight:500;
+}
+.dec .verdict b{color:var(--alp)}
+
+/* ---------- tags ---------- */
+.tag{
+  display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.05em;padding:2px 8px;border-radius:2px;
+  border:1px solid var(--line-strong);color:var(--ink-2);background:var(--surface-2);
+  white-space:nowrap;
+}
+.tag.ok{color:var(--alp);border-color:var(--alp-2);background:var(--alp-soft)}
+.tag.warn{color:var(--alert);border-color:var(--alert);background:var(--alert-soft)}
+.tag.city{color:var(--city);border-color:var(--city-2);background:var(--city-soft)}
+
+/* ---------- callout ---------- */
+.callout{
+  background:var(--alert-soft);border:1px solid var(--alert);border-left-width:3px;
+  border-radius:3px;padding:16px 18px;margin:22px 0;
+}
+.callout h3{font-size:16px;color:var(--alert);margin-bottom:6px}
+.callout p{margin:0;font-size:14px;color:var(--ink-2)}
+.callout p + p{margin-top:8px}
+
+/* ---------- timeline ---------- */
+.day-band{display:flex;align-items:center;gap:14px;margin:0 0 22px}
+.day-band .badge{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;
+  padding:5px 11px;border-radius:2px;color:var(--surface);background:var(--city);font-weight:600;
+}
+.day-band.alp .badge{background:var(--alp)}
+.day-band .what{font-family:'Zen Old Mincho',serif;font-size:19px}
+.day-band .where{color:var(--muted);font-size:13px;margin-left:auto;font-family:'IBM Plex Mono',monospace}
+
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl::before{
+  content:"";position:absolute;left:74px;top:8px;bottom:8px;width:var(--rail);
+  background:var(--city-soft);border-radius:2px;
+}
+.tl.alp::before{background:var(--alp-soft)}
+.tl li{position:relative;display:grid;grid-template-columns:62px 1fr;gap:26px;padding:0 0 22px}
+.tl li::before{
+  content:"";position:absolute;left:69px;top:9px;width:12px;height:12px;border-radius:50%;
+  background:var(--surface);border:var(--rail) solid var(--city);
+}
+.tl.alp li::before{border-color:var(--alp)}
+.tl li.soft::before{border-color:var(--line-strong)}
+.tl .t{
+  font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;
+  font-variant-numeric:tabular-nums;color:var(--city);text-align:right;padding-top:1px;
+}
+.tl.alp .t{color:var(--alp)}
+.tl li.soft .t{color:var(--muted);font-weight:400}
+.tl .c h3{font-size:16px;margin-bottom:3px;line-height:1.5}
+.tl .c p{margin:0;font-size:13.8px;color:var(--ink-2)}
+.tl .c p + p{margin-top:5px}
+.tl .c .meta{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)}
+
+.ridge{display:block;width:100%;height:56px;margin:34px 0 8px;color:var(--alp-2);opacity:.5}
+
+/* ---------- tables ---------- */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.6px}
+th,td{padding:11px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+thead th{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td.num,th.num{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.pick td{background:var(--alp-soft)}
+tr.dead td{color:var(--muted)}
+td strong{font-weight:700}
+
+/* ---------- route cards ---------- */
+.routes{display:flex;flex-direction:column;gap:14px}
+.route{
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  padding:18px 20px;box-shadow:var(--shadow);
+}
+.route.pick{border-color:var(--alp);border-left:3px solid var(--alp)}
+.route.dead{opacity:.72}
+.route-top{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:10px}
+.route-top h3{font-size:17px}
+.route .legs{
+  font-family:'IBM Plex Mono',monospace;font-size:12.8px;color:var(--ink-2);
+  background:var(--surface-2);border-radius:3px;padding:10px 13px;margin:0 0 11px;
+  line-height:2;overflow-x:auto;white-space:nowrap;
+}
+.route .legs b{color:var(--ink);font-weight:600}
+.route p{margin:0;font-size:13.8px;color:var(--ink-2)}
+.route .yes{color:var(--alp);font-weight:500}
+.route .no{color:var(--alert);font-weight:500}
+
+/* ---------- open questions ---------- */
+.open{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.open li{
+  display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:14px 17px;
+}
+.open .who{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;padding:2px 8px;
+  border-radius:2px;background:var(--surface-2);border:1px solid var(--line-strong);
+  color:var(--ink-2);white-space:nowrap;margin-top:3px;
+}
+.open .who.hot{background:var(--alert-soft);border-color:var(--alert);color:var(--alert)}
+.open h3{font-size:15px;margin-bottom:2px;font-family:'Zen Kaku Gothic New',sans-serif;font-weight:700}
+.open p{margin:0;font-size:13.5px;color:var(--ink-2)}
+
+/* ---------- sources ---------- */
+.src{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);font-size:12.6px;color:var(--muted)}
+.src h2{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;color:var(--muted);margin-bottom:12px;font-weight:500}
+.src ul{margin:0;padding-left:1.15em;display:grid;gap:5px}
+.src a{color:var(--city);text-decoration:none;border-bottom:1px solid var(--line-strong)}
+.src a:hover{border-bottom-color:var(--city)}
+.src .stamp{margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px}
+
+@media (max-width:680px){
+  .hero-in{padding:38px 20px 30px}
+  .tl::before{left:52px}
+  .tl li{grid-template-columns:44px 1fr;gap:18px}
+  .tl li::before{left:47px}
+  .day-band .where{width:100%;margin-left:0;order:3}
+  .anchor{flex:1 1 130px}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-in">
+    <p class="eyebrow">2026.09.12 SAT — 09.13 SUN / 渋谷 → 白馬</p>
+    <h1>渋谷から白馬へ</h1>
+    <p class="lede">
+      土曜は渋谷でロゲイニング、日曜の朝9時には長野県白馬村でトレイルランのスタートラインに立つ。
+      その間にある「風呂・荷物・列車」をどう組むかを一枚にまとめた。判断が要るのは実質3点。
+    </p>
+    <div class="anchors">
+      <div class="anchor city"><span class="k">Sat 解散</span><span class="v">15:15</span></div>
+      <div class="anchor city"><span class="k">東京発</span><span class="v">18:04</span></div>
+      <div class="anchor alp"><span class="k">白馬着</span><span class="v">21:10</span></div>
+      <div class="anchor alp"><span class="k">Sun Start</span><span class="v">09:00</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ 1. 決めること ============ -->
+  <section id="decide">
+    <div class="sec-head"><span class="num">01</span><h2>決めること</h2></div>
+    <p class="sec-note">
+      ここだけ決まれば残りは自動的に決まる。逆に、ここが決まらないと当日の夕方に駅で立ち往生する。
+    </p>
+    <div class="decisions">
+      <div class="dec">
+        <span class="tag city">移動</span>
+        <h3>どのルートで白馬に入るか</h3>
+        <p>選択肢は3つ。JR あずさ経由・北陸新幹線経由・夜行バス。所要も金額も似ているが、<b>風呂に入れるかどうかが分かれる</b>。</p>
+        <p class="verdict">→ <b>北陸新幹線＋長野からバス</b>を推奨（§03）</p>
+      </div>
+      <div class="dec">
+        <span class="tag city">風呂</span>
+        <h3>銭湯に入るか、白馬まで我慢するか</h3>
+        <p>渋谷で5時間歩き回った後そのまま新幹線に乗るか、1時間半使って風呂に入るか。推奨ルートなら<b>入っても間に合う</b>。</p>
+        <p class="verdict">→ <b>中目黒・光明泉</b>（渋谷から1駅・15時開店）</p>
+      </div>
+      <div class="dec">
+        <span class="tag warn">未確認</span>
+        <h3>9/12 の白馬の宿</h3>
+        <p>21時過ぎ着でチェックインできる宿か。八方エリアなら会場（八方第二駐車場）まで歩ける。押さえていなければここが最優先。</p>
+        <p class="verdict">→ <b>要確認</b>（§07）</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. Day 1 ============ -->
+  <section id="day1">
+    <div class="sec-head"><span class="num">02</span><h2>9/12（土）— 渋谷</h2></div>
+
+    <div class="day-band">
+      <span class="badge">DAY 1</span>
+      <span class="what">東京観光ロゲイニング2026 ～渋谷再発見2days～</span>
+      <span class="where">渋谷2-22-6 幸和ビル 4F</span>
+    </div>
+
+    <p class="sec-note">
+      写真でチェックポイント（約40ヶ所）を回って得点を集める、2〜3人1チームの街歩き競技。
+      下のタイムラインは <b>5時間の部</b>（9:45スタート）で組んである。3時間の部なら全体が<b>ちょうど1時間後ろ倒し・終了は14:15</b>で、以降の余裕はさらに増える。
+    </p>
+
+    <ol class="tl">
+      <li>
+        <div class="t">08:30</div>
+        <div class="c">
+          <h3>渋谷駅で荷物を預ける</h3>
+          <p>会場に荷物預かりは無い（「会場内にて、自己管理」）。白馬用のザック一式を持って40ヶ所を歩くのは現実的ではないので、ここで切り離す。</p>
+          <p class="meta">推奨 → 東京メトロ 宮益坂中央改札付近（大700円 ×15／特大900円 ×1・計117台）。会場のある渋谷2丁目に最も近い。詳細は §05</p>
+        </div>
+      </li>
+      <li>
+        <div class="t">09:00</div>
+        <div class="c">
+          <h3>受付（9:00–9:15）</h3>
+          <p>幸和ビル4F。参加賞はここで受け取り。更衣室は無い（トイレを使う）。</p>
+          <p class="meta">持ち物：デジタルカメラ・保険証・コンパス・携帯電話・筆記用具</p>
+        </div>
+      </li>
+      <li class="soft">
+        <div class="t">09:15</div>
+        <div class="c">
+          <h3>競技説明（9:15–9:45）</h3>
+          <p>ルールとMAP配布。ここで作戦を決める。</p>
+        </div>
+      </li>
+      <li>
+        <div class="t">09:45</div>
+        <div class="c">
+          <h3>スタート — 競技（9:45–14:45）</h3>
+          <p>5時間。翌日が本番のレースなので、<b>ここでの脚の使い方が翌朝に直接効く</b>。獲得点数より、下りの階段と長時間の立ち歩きを抑える判断を優先したい。</p>
+        </div>
+      </li>
+      <li>
+        <div class="t">15:00</div>
+        <div class="c">
+          <h3>集計・表彰式（15:00–15:15）</h3>
+          <p>ここで解散。以降が本ページの本題。</p>
+        </div>
+      </li>
+      <li>
+        <div class="t">15:25</div>
+        <div class="c">
+          <h3>ロッカー回収 → 中目黒へ</h3>
+          <p>幸和ビルから宮益坂改札まで徒歩5分前後。東横線で中目黒へ1駅（約3分）。</p>
+        </div>
+      </li>
+      <li>
+        <div class="t">15:45</div>
+        <div class="c">
+          <h3>光明泉（中目黒）— 銭湯</h3>
+          <p>15:00開店。露天あり。1時間強で上がる。選択肢の比較は §04。</p>
+          <p class="meta">目黒区上目黒1-6-1／中目黒駅 徒歩3分／15:00–25:00・不定休</p>
+        </div>
+      </li>
+      <li>
+        <div class="t">17:10</div>
+        <div class="c">
+          <h3>中目黒 → 渋谷 → 東京駅</h3>
+          <p>東横線＋山手線で約30分。17:45頃に東京駅着。ここで駅弁と翌朝の補給を買う（白馬着が21時過ぎなので、現地の店はほぼ閉まっている前提で動く）。</p>
+        </div>
+      </li>
+      <li>
+        <div class="t">18:04</div>
+        <div class="c">
+          <h3>北陸新幹線 はくたか573号 → 長野 19:40</h3>
+          <p>予備は <b>18:24 かがやき515号 → 長野 19:44</b>（80分）。ただし次のバスまで16分しかないので、余裕を取るなら18:04。</p>
+        </div>
+      </li>
+      <li>
+        <div class="t">20:00</div>
+        <div class="c">
+          <h3>長野駅東口 → 特急バス（この日の最終便）</h3>
+          <p>春夏秋ダイヤ（4/1–11/30）は<b>予約不要</b>、当日窓口または車内で購入。所要 約1時間10分。<b>これを逃すとその日のうちに白馬へ入れない</b>。</p>
+        </div>
+      </li>
+      <li>
+        <div class="t">21:10</div>
+        <div class="c">
+          <h3>白馬 着 — 宿へ</h3>
+          <p>白馬駅前・白馬八方バスターミナルとも停車。翌朝の会場は八方第二駐車場なので、宿が八方側なら八方で降りる。</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ============ 3. 移動 ============ -->
+  <section id="transfer">
+    <div class="sec-head"><span class="num">03</span><h2>白馬へのルート — 3案</h2></div>
+    <p class="sec-note">
+      新宿から白馬への直通「あずさ」は <b>1日1本・朝8:00発だけ</b>（白馬11:40着）。
+      夕方に東京を出る場合、選択肢は「松本乗継」「長野乗継」「夜行バス」の3つに絞られる。
+    </p>
+
+    <div class="routes">
+
+      <div class="route pick">
+        <div class="route-top">
+          <span class="tag ok">推奨</span>
+          <h3>C — 北陸新幹線 → 長野からバス</h3>
+        </div>
+        <p class="legs">
+          渋谷 <b>15:25</b> →〔山手線 25分〕→ 東京 &nbsp;·&nbsp; 東京 <b>18:04</b> →〔はくたか573号 96分〕→ 長野 <b>19:40</b> &nbsp;·&nbsp; 長野駅東口 <b>20:00</b> →〔特急バス 約70分〕→ 白馬 <b>21:10</b>頃
+        </p>
+        <p>
+          <span class="yes">乗換2回・待ち時間に余裕あり。銭湯にも夕食にも手が届く唯一の案。</span>
+          バスは予約不要（春夏秋ダイヤ）。概算 新幹線 約¥8,000台＋バス ¥2,500前後。
+          リスクは<b>長野20:00が最終バスであること</b>ひとつに集約されるので、そこだけ守ればいい。
+        </p>
+      </div>
+
+      <div class="route">
+        <div class="route-top">
+          <span class="tag">代替</span>
+          <h3>A — あずさ → 松本・信濃大町 乗継</h3>
+        </div>
+        <p class="legs">
+          新宿 <b>16:00頃</b> →〔あずさ〕→ 松本 <b>18:40頃</b> →〔大糸線 19:15 信濃大町行〕→ 信濃大町 →〔<b>20:21</b> 白馬行〕→ 白馬 <b>20:57</b>
+        </p>
+        <p>
+          <span class="no">銭湯の時間が取れない。</span>15:15解散から直行で新宿16時台のあずさに乗る必要がある。
+          乗換2回＋在来線1時間半で、到着はCとほぼ同じ。
+          さらに <b>17時以降の松本発に白馬直通は無く</b>、確認できたのは平日ダイヤなので<b>土曜の接続は要確認</b>。積極的に選ぶ理由が薄い。
+        </p>
+      </div>
+
+      <div class="route">
+        <div class="route-top">
+          <span class="tag">代替</span>
+          <h3>B — 夜行バス（バスタ新宿 23:05）</h3>
+        </div>
+        <p class="legs">
+          バスタ新宿 <b>23:05</b>（5551便）→ 白馬 <b>4:15–4:35</b>頃 &nbsp;·&nbsp; 当日受付 <b>6:00–8:30</b> → スタート <b>9:00</b>
+        </p>
+        <p>
+          <span class="yes">東京で風呂も夕食もフルに取れて、宿代も浮く。</span>
+          受付時刻には間に合う。<span class="no">ただしレース前夜の睡眠がバス座席になる。</span>
+          運賃 ¥5,200–7,000＋夜行代 ¥2,000。<b>初めてのトレイルレースの前夜としては勧めない</b>——宿が取れなかった場合の最後の砦として置いておく案。
+        </p>
+      </div>
+
+      <div class="route dead">
+        <div class="route-top">
+          <span class="tag warn">不可</span>
+          <h3>D — 新宿15:05発の昼行バス</h3>
+        </div>
+        <p class="legs">
+          バスタ新宿 <b>15:05</b> → 白馬八方 <b>20:28</b>
+        </p>
+        <p>乗換なしで最も楽だが、<b>15:15解散に10分間に合わない</b>。3時間の部（14:15解散）でも渋谷→新宿の移動を含めて現実的でない。</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 4. 銭湯 ============ -->
+  <section id="bath">
+    <div class="sec-head"><span class="num">04</span><h2>銭湯</h2></div>
+    <p class="sec-note">
+      渋谷で最有力の <b>改良湯は土曜が定休日</b>なので 9/12 は使えない。土曜の午後に開いていて、渋谷から動線が破綻しないのは実質この3つ。
+    </p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>候補</th><th>場所 / 渋谷から</th><th class="num">営業</th><th>判断</th></tr>
+        </thead>
+        <tbody>
+          <tr class="pick">
+            <td><strong>光明泉</strong><br><span class="tag ok">推奨</span></td>
+            <td>中目黒（目黒区上目黒1-6-1）<br>東横線1駅・約3分＋徒歩3分</td>
+            <td class="num">15:00–25:00<br>不定休</td>
+            <td>15時開店＝解散直後に入れる。露天あり。東京駅へ戻る動線も素直。<b>不定休なので前日に営業確認</b>。</td>
+          </tr>
+          <tr>
+            <td><strong>広尾湯</strong></td>
+            <td>渋谷区広尾5丁目<br>恵比寿経由</td>
+            <td class="num">15:00–24:00<br>定休 水曜</td>
+            <td>土曜は営業。渋谷区内で完結するが、恵比寿からの徒歩が加わり中目黒より動線が長い。</td>
+          </tr>
+          <tr>
+            <td><strong>テルマー湯 新宿</strong></td>
+            <td>新宿三丁目 E1 徒歩2分</td>
+            <td class="num">24時間<br>無休</td>
+            <td>ルートA・Bを選ぶ場合の受け皿。一般 金土日祝 ¥2,800 と銭湯価格ではない。バスタ新宿にも近い。</td>
+          </tr>
+          <tr class="dead">
+            <td><strong>改良湯</strong></td>
+            <td>渋谷区東2-19-9</td>
+            <td class="num">土曜 定休</td>
+            <td><span class="tag warn">9/12は不可</span> 渋谷から最も近く評判も良いが、よりによって土曜が休み。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 5. ロッカー ============ -->
+  <section id="locker">
+    <div class="sec-head"><span class="num">05</span><h2>渋谷のロッカー</h2></div>
+    <p class="sec-note">
+      レース用ザック＋着替え＋（必携装備次第で）レインウェアと熊鈴まで入るので、<b>大〜特大サイズが要る</b>。
+      土曜の渋谷は埋まりやすいため、第一候補が満杯だった場合の第二候補まで決めてから家を出る。
+    </p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>場所</th><th class="num">サイズ・料金</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr class="pick">
+            <td><strong>東京メトロ 宮益坂中央改札付近</strong><br><span class="tag ok">第一候補</span></td>
+            <td class="num">小400 ×59<br>中500 ×42<br>大700 ×15<br>特大900 ×1</td>
+            <td>計117台と数が多く、<b>大型の在庫がある</b>。会場（渋谷2-22-6）と同じ渋谷駅東側で、往復のロスが最小。</td>
+          </tr>
+          <tr>
+            <td><strong>渋谷109 地下2階</strong></td>
+            <td class="num">小300 / 中500 / 大600</td>
+            <td>道玄坂改札側。人通りが少なく空いていることが多い穴場だが、会場からは駅の反対側になる。</td>
+          </tr>
+          <tr>
+            <td><strong>JR ハチ公改札</strong></td>
+            <td class="num">小400 / 中500 / 大600</td>
+            <td>分かりやすい位置ゆえ<b>土日はほぼ埋まる</b>。当てにしない。</td>
+          </tr>
+          <tr>
+            <td><strong>西口 みどりの窓口</strong></td>
+            <td class="num">小300 / 中400 / 大500</td>
+            <td>24時間利用可。安いが西口側。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ ridge divider ============ -->
+  <svg class="ridge" viewBox="0 0 900 56" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M0 54 L96 30 L150 41 L228 12 L300 34 L352 25 L430 46 L505 18 L560 33 L640 6 L712 30 L780 21 L846 40 L900 28"
+          fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+
+  <!-- ============ 6. Day 2 ============ -->
+  <section id="day2">
+    <div class="sec-head"><span class="num">06</span><h2>9/13（日）— 白馬</h2></div>
+
+    <div class="day-band alp">
+      <span class="badge">DAY 2</span>
+      <span class="what">白馬国際クラシック 2026 — 12km</span>
+      <span class="where">八方第二駐車場 発着</span>
+    </div>
+
+    <div class="callout">
+      <h3>前日受付には行けない。当日受付が前提。</h3>
+      <p>
+        公式の前日受付は <b>9/12（土）12:00–17:00・八方第二駐車場</b>。同じ時間帯に渋谷でロゲイニングをしているので<b>物理的に不可能</b>。
+      </p>
+      <p>
+        救いは <b>当日受付（9/13 6:00〜各種目スタート30分前）がある</b>こと。12kmは9:00スタートなので <b>8:30が受付の締切</b>。
+        参加賞も受付時の受け渡しなので、朝に受け取ることになる。<b>当日受付で本当に足りるか、大会事務局に1本確認しておくのが安全</b>。
+      </p>
+    </div>
+
+    <ol class="tl alp">
+      <li>
+        <div class="t">06:00</div>
+        <div class="c">
+          <h3>当日受付 開始</h3>
+          <p>八方第二駐車場。ゼッケン・計測チップ・参加賞をここで受け取る。<b>12kmの締切は8:30</b>だが、初参加なら7時台に済ませて余白を作りたい。</p>
+        </div>
+      </li>
+      <li class="soft">
+        <div class="t">—</div>
+        <div class="c">
+          <h3>更衣室・荷物</h3>
+          <p>更衣室はスタート地点にあり。荷物はスタート・ゴール隣の<b>八方文化会館</b>——ただし<b>スタッフ常駐なし</b>。貴重品は宿に置いていく。</p>
+        </div>
+      </li>
+      <li>
+        <div class="t">09:00</div>
+        <div class="c">
+          <h3>12km スタート（制限4時間 / 13:00）</h3>
+          <p>要求ペース 3.0km/h。<b>全区間歩いても完走できる制限</b>。コースの核心は岩岳への一本登りと、その後のテクニカルな下り。</p>
+          <p class="meta">戦術：登りは歩く・下りで走る。前日に渋谷を5時間歩いた脚であることを織り込む。</p>
+        </div>
+      </li>
+      <li class="soft">
+        <div class="t">13:00</div>
+        <div class="c">
+          <h3>制限時間 / ゴール</h3>
+          <p>参考・同日の他種目：50km 7:00発（制限11h）／29km 8:30発（7.5h）／6km 9:30発（2h）。</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ============ 7. 未確認 ============ -->
+  <section id="open">
+    <div class="sec-head"><span class="num">07</span><h2>未確認事項</h2></div>
+    <p class="sec-note">
+      以下は<b>まだ裏が取れていない</b>。上のタイムラインは「取れている情報」だけで組んであるが、この6件のうち上2つが崩れると計画そのものが変わる。
+    </p>
+    <ul class="open">
+      <li>
+        <span class="who hot">最優先</span>
+        <div>
+          <h3>9/12 の白馬の宿</h3>
+          <p>21時過ぎのチェックインを受けてくれるか。押さえていなければ、ルートBの夜行バス（宿代ゼロ）に切り替える判断が要る。</p>
+        </div>
+      </li>
+      <li>
+        <span class="who hot">最優先</span>
+        <div>
+          <h3>ロゲイニングのエントリー状況と部門</h3>
+          <p>申込〆切は <b>9/6 で終了済み</b>。エントリー済みであること、そして 5時間の部か3時間の部か（＝解散が15:15か14:15か）で以降が1時間動く。チームは2〜3人編成。</p>
+        </div>
+      </li>
+      <li>
+        <span class="who">要確認</span>
+        <div>
+          <h3>12km種目の必携装備リスト</h3>
+          <p>公式から取れたのは50km種目の記載（ゼッケン、計測チップ、<b>ココヘリ発信機</b>、GPS時計/スマホ、ライト、<b>シームテープ加工のフード付きレインジャケット</b>、熊鈴、ドリンク、携帯カップ）。12kmに同じものが要るなら、荷物量とロッカーサイズが変わる。</p>
+        </div>
+      </li>
+      <li>
+        <span class="who">要確認</span>
+        <div>
+          <h3>大糸線・特急バスの土曜ダイヤ</h3>
+          <p>取得できた松本発の大糸線は平日ダイヤ。長野〜白馬の特急バス最終20:00も春夏秋ダイヤの記載ベース。<b>推奨ルートの生命線なので、前日にアルピコ交通（長野営業所 026-254-6000）で確定させる</b>。</p>
+        </div>
+      </li>
+      <li>
+        <span class="who">要確認</span>
+        <div>
+          <h3>運賃</h3>
+          <p>長野〜白馬駅前 ¥2,500 は第三者情報。新幹線 東京〜長野の指定席も概算。合計の実額は未確定。</p>
+        </div>
+      </li>
+      <li>
+        <span class="who">当日次第</span>
+        <div>
+          <h3>ロッカーの空き</h3>
+          <p>台数・料金はいずれも第三者情報で、<b>当日の空きは誰にも保証できない</b>。第二候補（渋谷109 B2F）まで頭に入れておく。</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ sources ============ -->
+  <footer class="src">
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://www.sportsentry.ne.jp/event/t/105460">スポーツエントリー — 東京観光ロゲイニング2026 ～渋谷再発見2days～</a>（日程・時刻・会場・持ち物・荷物/更衣室）</li>
+      <li><a href="https://s-mountain.com/hakuba/about/">白馬国際クラシック 大会概要（公式）</a>（種目・スタート時刻・受付・会場・荷物・必携装備）</li>
+      <li><a href="https://www.alpico.co.jp/traffic/express/nagano_hakuba/">アルピコ交通 — 特急バス 長野〜白馬線</a>（4/1–11/30 ダイヤ・最終20:00・予約不要）</li>
+      <li><a href="https://www.alpico.co.jp/traffic/express/hakuba_shinjuku/">アルピコ交通 — 高速バス 安曇野・大町・白馬〜新宿線</a>（15:05便・夜行5551便）</li>
+      <li><a href="https://transit.yahoo.co.jp/timetable/24325/1331">Yahoo!路線情報 — 松本駅 JR大糸線 信濃大町・白馬方面</a>（平日ダイヤ）</li>
+      <li><a href="https://kohmeisen.com/">光明泉</a> ／ <a href="https://kairyou-yu.com/about/">改良湯（営業案内・土曜定休）</a> ／ <a href="https://thermae-yu.jp/user-guide/">テルマー湯 新宿店</a></li>
+      <li><a href="https://www.1010.or.jp/map/archives/area/%E6%B8%8B%E8%B0%B7%E5%8C%BA">東京銭湯マップ — 渋谷区</a></li>
+      <li>渋谷駅ロッカー：<a href="https://www.jalan.net/news/article/294205/">じゃらんニュース</a> ／ <a href="https://tokyolucci.jp/shibuya-coinlocker">東京ルッチ</a>（いずれも第三者情報）</li>
+    </ul>
+    <p class="stamp">作成 2026-09-07 ／ 出典未確認の項目は §07 に分離してある。</p>
+  </footer>
+
+</div>
+</body>
+</html>
