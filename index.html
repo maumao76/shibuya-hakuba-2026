@@ -86,7 +86,29 @@ body{
 
 .wrap{max-width:940px;margin:0 auto;padding:0 22px 80px}
 h1,h2,h3{font-family:'Zen Old Mincho','Yu Mincho',serif;font-weight:600;text-wrap:balance;margin:0}
-.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}
+
+/* ---------- division switch: 5h is the default when no attribute is set ---------- */
+/* revert (not inline) so a <p> comes back as block and a <span> as inline */
+.v3{display:none}
+:root[data-div="3"] .v3{display:revert}
+:root[data-div="3"] .v5{display:none}
+
+.seg-wrap{
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  padding:15px 17px;margin-bottom:24px;box-shadow:var(--shadow);
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px;
+}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:3px;overflow:hidden;flex:0 0 auto}
+.seg-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.04em;
+  padding:8px 16px;border:none;background:var(--surface-2);color:var(--ink-2);
+  cursor:pointer;transition:background .12s ease,color .12s ease;
+}
+.seg-btn + .seg-btn{border-left:1px solid var(--line-strong)}
+.seg-btn:hover{background:var(--city-soft);color:var(--city)}
+.seg-btn[aria-pressed="true"]{background:var(--city);color:#fff;font-weight:600}
+.seg-note{margin:0;font-size:12.8px;color:var(--muted);flex:1 1 260px;min-width:0}
+.seg-note b{color:var(--ink-2)}
 
 /* ---------- hero ---------- */
 .hero{border-bottom:1px solid var(--line);background:var(--surface);}
@@ -202,6 +224,14 @@ section{margin-top:56px}
 .tl .c p + p{margin-top:5px}
 .tl .c .meta{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)}
 
+/* the point where the schedule stops depending on the division */
+.tl li.fixed-from{margin-top:6px}
+.tl li.fixed-from::after{
+  content:"ここから先は部門に関係なく共通";
+  position:absolute;left:88px;top:-16px;font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.06em;color:var(--muted);
+}
+
 .ridge{display:block;width:100%;height:56px;margin:34px 0 8px;color:var(--alp-2);opacity:.5}
 
 /* ---------- tables ---------- */
@@ -246,6 +276,7 @@ td strong{font-weight:700}
   .tl::before{left:52px}
   .tl li{grid-template-columns:44px 1fr;gap:18px}
   .tl li::before{left:47px}
+  .tl li.fixed-from::after{left:66px}
   .day-band .where{width:100%;margin-left:0;order:3}
   .anchor{flex:1 1 120px}
 }
@@ -258,10 +289,10 @@ td strong{font-weight:700}
     <h1>渋谷から白馬へ</h1>
     <p class="lede">
       土曜は渋谷でロゲイニング、日曜の朝9時には長野県白馬村でトレイルランのスタートラインに立つ。
-      新幹線と車が確定したので、この一枚は「その間の1時間40分をどう使うか」と「翌朝の受付」に絞ってある。
+      新幹線と車が確定したので、この一枚は「解散から渋谷を出るまでの<span class="v5">1時間35分</span><span class="v3">2時間35分</span>をどう使うか」と「翌朝の受付」に絞ってある。
     </p>
     <div class="anchors">
-      <div class="anchor city"><span class="k">Sat 解散</span><span class="v">15:15</span></div>
+      <div class="anchor city"><span class="k">Sat 解散</span><span class="v"><span class="v5">15:15</span><span class="v3">14:15</span></span></div>
       <div class="anchor city"><span class="k">大宮発</span><span class="v">17:49</span></div>
       <div class="anchor city"><span class="k">長野着</span><span class="v">18:47</span></div>
       <div class="anchor alp"><span class="k">白馬着</span><span class="v">20:00</span></div>
@@ -272,14 +303,26 @@ td strong{font-weight:700}
 
 <div class="wrap">
 
+  <!-- ============ division switch ============ -->
+  <div class="seg-wrap" style="margin-top:30px">
+    <div class="seg" role="group" aria-label="ロゲイニングの部門を切り替える">
+      <button type="button" class="seg-btn" data-set="5" aria-pressed="true">5時間の部</button>
+      <button type="button" class="seg-btn" data-set="3" aria-pressed="false">3時間の部</button>
+    </div>
+    <p class="seg-note">
+      この大会は <b>3時間の部と5時間の部の2部門だけ</b>（4時間の部は無い）。
+      切り替えると 9/12 の午前から夕方までが連動する。<b>大宮 17:49 より後は両部門とも同じ</b>。
+    </p>
+  </div>
+
   <!-- ============ 0. 確定事項 ============ -->
-  <section id="locked" style="margin-top:44px">
+  <section id="locked" style="margin-top:34px">
     <div class="sec-head"><span class="num">00</span><h2>確定していること</h2></div>
     <div class="locked">
       <div class="cell">
         <span class="lab">Sat / 渋谷</span>
-        <span class="big">09:45 – 15:15</span>
-        <span class="sub">東京観光ロゲイニング 5時間の部</span>
+        <span class="big"><span class="v5">09:45 – 15:15</span><span class="v3">10:45 – 14:15</span></span>
+        <span class="sub">東京観光ロゲイニング <span class="v5">5時間の部</span><span class="v3">3時間の部</span>（競技〜解散）</span>
       </div>
       <div class="cell">
         <span class="lab">Sat / 新幹線</span>
@@ -301,7 +344,7 @@ td strong{font-weight:700}
       <h3>車が入ったことで、この計画の最大の制約が消えた。</h3>
       <p>
         公共交通だけだと <b>長野駅20:00発が白馬への最終バス</b>で、そこに全部を合わせる必要があった。
-        車なら 18:47 着からそのまま走れるので、<b>夕方に1時間40分の自由枠</b>が生まれ、
+        車なら 18:47 着からそのまま走れるので、夕方に自由枠が生まれ、
         さらに<b>到着後に白馬八方温泉に入る余地</b>まで出てくる（§03）。
       </p>
     </div>
@@ -311,20 +354,21 @@ td strong{font-weight:700}
   <section id="decide">
     <div class="sec-head"><span class="num">01</span><h2>まだ決まっていないこと</h2></div>
     <p class="sec-note">
-      移動が固まったので、残る判断は2つに減った。あとは §05 の未確認事項を潰すだけ。
+      移動が固まったので、残る判断は2つに減った。あとは §06 の未確認事項を潰すだけ。
     </p>
     <div class="decisions">
       <div class="dec">
-        <span class="tag city">15:15–16:50</span>
-        <h3>解散後の1時間40分をどう使うか</h3>
-        <p>東京で銭湯に入るか、身体を休めて白馬に着いてから温泉に入るか。<b>両方は要らない</b>。前者は移動が1本増え、後者は到着時刻に賭ける。</p>
+        <span class="tag city"><span class="v5">15:15–16:50</span><span class="v3">14:15–16:50</span></span>
+        <h3>解散後の<span class="v5">1時間35分</span><span class="v3">2時間35分</span>をどう使うか</h3>
+        <p class="v5">東京で銭湯に入るか、身体を休めて白馬に着いてから温泉に入るか。<b>両方は要らない</b>。前者は移動が1本増え、後者は到着時刻に賭ける。</p>
+        <p class="v3">3時間の部なら枠が1時間広いので、<b>東京の銭湯も無理なく成立する</b>。それでも白馬の温泉と両方に入る意味は薄い。</p>
         <p class="verdict">→ <b>白馬・みみずくの湯</b>を推奨（§03）</p>
       </div>
       <div class="dec">
         <span class="tag warn">未確認</span>
         <h3>9/12 の白馬の宿</h3>
         <p>20時台のチェックインを受けてくれるか。車があるので八方エリアに限定されないが、翌朝6時台に動くことを考えると会場近くが有利。</p>
-        <p class="verdict">→ <b>要確認・最優先</b>（§05）</p>
+        <p class="verdict">→ <b>要確認・最優先</b>（§06）</p>
       </div>
     </div>
   </section>
@@ -341,12 +385,13 @@ td strong{font-weight:700}
 
     <p class="sec-note">
       写真でチェックポイント（約40ヶ所）を回って得点を集める、2〜3人1チームの街歩き競技。
-      下は <b>5時間の部</b>（9:45スタート）で組んである。3時間の部なら全体が<b>1時間前倒し・終了は14:15</b>で、夕方の余裕はさらに1時間増える。
+      いま表示しているのは <b><span class="v5">5時間の部</span><span class="v3">3時間の部</span></b>。
+      上のスイッチで切り替わるのは <b>16:50 の渋谷発まで</b>で、そこから先の新幹線・車・翌日は両部門で同じ。
     </p>
 
     <ol class="tl">
       <li>
-        <div class="t">08:30</div>
+        <div class="t"><span class="v5">08:30</span><span class="v3">09:30</span></div>
         <div class="c">
           <h3>渋谷駅で荷物を預ける</h3>
           <p>会場に荷物預かりは無い（「会場内にて、自己管理」）。白馬用の一式を持って40ヶ所を歩くのは現実的でないので、ここで切り離す。</p>
@@ -354,48 +399,49 @@ td strong{font-weight:700}
         </div>
       </li>
       <li>
-        <div class="t">09:00</div>
+        <div class="t"><span class="v5">09:00</span><span class="v3">10:00</span></div>
         <div class="c">
-          <h3>受付（9:00–9:15）</h3>
+          <h3>受付（<span class="v5">9:00–9:15</span><span class="v3">10:00–10:15</span>）</h3>
           <p>幸和ビル4F。参加賞はここで受け取り。更衣室は無い（トイレを使う）。</p>
           <p class="meta">持ち物：デジタルカメラ・保険証・コンパス・携帯電話・筆記用具</p>
         </div>
       </li>
       <li class="soft">
-        <div class="t">09:15</div>
+        <div class="t"><span class="v5">09:15</span><span class="v3">10:15</span></div>
         <div class="c">
-          <h3>競技説明（9:15–9:45）</h3>
+          <h3>競技説明（<span class="v5">9:15–9:45</span><span class="v3">10:15–10:45</span>）</h3>
           <p>ルールとMAP配布。ここで作戦を決める。</p>
         </div>
       </li>
       <li class="key">
-        <div class="t">09:45</div>
+        <div class="t"><span class="v5">09:45</span><span class="v3">10:45</span></div>
         <div class="c">
-          <h3>スタート — 競技（9:45–14:45）</h3>
-          <p>5時間。翌日が本番のレースなので、<b>ここでの脚の使い方が翌朝に直接効く</b>。獲得点数より、長い下り階段と立ちっぱなしの時間を抑える判断を優先したい。</p>
+          <h3>スタート — 競技（<span class="v5">9:45–14:45・5時間</span><span class="v3">10:45–13:45・3時間</span>）</h3>
+          <p>翌日が本番のレースなので、<b>ここでの脚の使い方が翌朝に直接効く</b>。獲得点数より、長い下り階段と立ちっぱなしの時間を抑える判断を優先したい。</p>
+          <p class="meta v3">3時間の部は競技が2時間短いぶん、脚へのダメージも読みやすい。</p>
         </div>
       </li>
       <li>
-        <div class="t">15:00</div>
+        <div class="t"><span class="v5">15:00</span><span class="v3">14:00</span></div>
         <div class="c">
-          <h3>集計・表彰式（15:00–15:15）</h3>
+          <h3>集計・表彰式（<span class="v5">15:00–15:15</span><span class="v3">14:00–14:15</span>）</h3>
           <p>ここで解散。</p>
         </div>
       </li>
       <li>
-        <div class="t">15:25</div>
+        <div class="t"><span class="v5">15:25</span><span class="v3">14:25</span></div>
         <div class="c">
           <h3>ロッカー回収</h3>
-          <p>幸和ビルから宮益坂改札まで徒歩5分前後。ここから <b>16:50 までが自由枠</b>（§03 で使い道を比較）。</p>
+          <p>幸和ビルから宮益坂改札まで徒歩5分前後。ここから <b>16:50 までが自由枠</b>＝正味 <b><span class="v5">約1時間25分</span><span class="v3">約2時間25分</span></b>（§03 で使い道を比較）。</p>
         </div>
       </li>
-      <li class="key">
+      <li class="key fixed-from">
         <div class="t">16:50</div>
         <div class="c">
           <h3>渋谷 → 大宮（湘南新宿ライン・直通）</h3>
           <p>所要 <b>35〜39分</b>。16:50頃の便に乗れば大宮 17:30前後着で、新幹線まで<b>15分以上のマージン</b>が残る。
           17:05を過ぎると余裕が10分を切るので、そこを実質の締切とみなす。</p>
-          <p class="meta">土曜ダイヤの実発車時刻は未確認 → §05。乗換なしの1本なので、遅延しない限り読みやすい区間。</p>
+          <p class="meta">土曜ダイヤの実発車時刻は未確認 → §06。乗換なしの1本なので、遅延しない限り読みやすい区間。</p>
         </div>
       </li>
       <li class="key">
@@ -410,7 +456,7 @@ td strong{font-weight:700}
         <div class="c">
           <h3>長野で車に乗る</h3>
           <p>合流・積み込みで15分弱みておく。ここから先は<b>時刻表に縛られない</b>。</p>
-          <p class="meta">レンタカーなら営業所の受付終了時刻に注意（18:47着は多くの店で閉店間際）→ §05</p>
+          <p class="meta">レンタカーなら営業所の受付終了時刻に注意（18:47着は多くの店で閉店間際）→ §06</p>
         </div>
       </li>
       <li class="key">
@@ -439,9 +485,10 @@ td strong{font-weight:700}
 
   <!-- ============ 3. 自由枠と風呂 ============ -->
   <section id="bath">
-    <div class="sec-head"><span class="num">03</span><h2>15:15–16:50 の使い道</h2></div>
+    <div class="sec-head"><span class="num">03</span><h2>解散後の使い道</h2></div>
     <p class="sec-note">
-      渋谷を出るのが 16:50 なので、解散後に使えるのは <b>正味 1時間25分</b>。この枠で東京の銭湯に入るか、白馬まで持ち越すかの比較。
+      渋谷を出るのが 16:50 なので、解散（<span class="v5">15:15</span><span class="v3">14:15</span>）からロッカー回収を挟んで使えるのは
+      <b>正味 <span class="v5">約1時間25分</span><span class="v3">約2時間25分</span></b>。この枠で東京の銭湯に入るか、白馬まで持ち越すかの比較。
       なお <b>渋谷で最有力の改良湯は土曜が定休日</b>なので、そもそも選択肢に入らない。
     </p>
     <div class="tbl-wrap">
@@ -458,9 +505,15 @@ td strong{font-weight:700}
           </tr>
           <tr>
             <td><strong>B — 中目黒で入る</strong></td>
-            <td>15:35 中目黒着 → <b>15:45–16:30 光明泉</b> → 16:40発 → 16:45 渋谷 → 16:50 湘南新宿ライン。</td>
+            <td>
+              <span class="v5">15:35 中目黒着 → <b>15:45–16:30 光明泉</b> → 16:40発 → 16:45 渋谷 → 16:50 湘南新宿ライン。</span>
+              <span class="v3">14:35 中目黒着 → 15:00 の開店を待って <b>15:00–16:15 光明泉</b> → 16:25発 → 16:35 渋谷 → 16:50 湘南新宿ライン。</span>
+            </td>
             <td class="num">15:00開店<br>不定休</td>
-            <td>成立はするが湯船は実質40分で、<b>乗換が2本増える</b>。不定休なので前日の営業確認も要る。長野で夕食をゆっくり取りたい場合はこちら。</td>
+            <td>
+              <span class="v5">成立はするが湯船は実質40分で、<b>乗換が2本増える</b>。不定休なので前日の営業確認も要る。長野で夕食をゆっくり取りたい場合はこちら。</span>
+              <span class="v3">枠が広いので<b>75分ゆっくり入れて、渋谷に戻ってもまだ余裕がある</b>。難点は開店15:00を待つ35分と、不定休の営業確認。長野で夕食をゆっくり取りたいならこちら。</span>
+            </td>
           </tr>
           <tr>
             <td><strong>C — 入らない</strong></td>
@@ -536,7 +589,9 @@ td strong{font-weight:700}
     <div class="callout">
       <h3>前日受付には行けない。当日受付が前提。</h3>
       <p>
-        公式の前日受付は <b>9/12（土）12:00–17:00・八方第二駐車場</b>。同じ時間帯に渋谷でロゲイニングをしているので<b>物理的に不可能</b>。車があっても変わらない。
+        公式の前日受付は <b>9/12（土）12:00–17:00・八方第二駐車場</b>。同じ時間帯に渋谷でロゲイニングをしているので<b>物理的に不可能</b>。
+        <span class="v3">3時間の部（14:15解散）でも、そこから白馬に着くのは20時台なので変わらない。</span>
+        車があっても変わらない。
       </p>
       <p>
         救いは <b>当日受付（9/13 6:00〜各種目スタート30分前）がある</b>こと。12kmは9:00スタートなので <b>8:30が受付の締切</b>。
@@ -571,7 +626,7 @@ td strong{font-weight:700}
         <div class="c">
           <h3>12km スタート（制限4時間 / 13:00）</h3>
           <p>要求ペース 3.0km/h ＝ <b>全区間歩いても完走できる</b>制限。コースの核心は岩岳への一本登りと、その後のテクニカルな下り。</p>
-          <p class="meta">戦術：登りは歩く・下りで走る。前日に渋谷を5時間歩いた脚であることを織り込む。</p>
+          <p class="meta">戦術：登りは歩く・下りで走る。前日に渋谷を<span class="v5">5時間</span><span class="v3">3時間</span>歩いた脚であることを織り込む。</p>
         </div>
       </li>
       <li class="soft">
@@ -602,7 +657,7 @@ td strong{font-weight:700}
         <span class="who hot">最優先</span>
         <div>
           <h3>ロゲイニングのエントリー状況と部門</h3>
-          <p>申込〆切は <b>9/6 で終了済み</b>。エントリー済みであること、そして 5時間の部か3時間の部か（＝解散が15:15か14:15か）で夕方の余裕が1時間動く。チームは2〜3人編成。</p>
+          <p>申込〆切は <b>9/6 で終了済み</b>。エントリー済みであること、そして <b>3時間の部か5時間の部か</b>（＝解散が14:15か15:15か）で夕方の余裕が1時間動く。<b>ページ上部のスイッチは仮置きで、正解は申込内容にある</b>。チームは2〜3人編成。</p>
         </div>
       </li>
       <li>
@@ -640,7 +695,7 @@ td strong{font-weight:700}
   <footer class="src">
     <h2>Sources</h2>
     <ul>
-      <li><a href="https://www.sportsentry.ne.jp/event/t/105460">スポーツエントリー — 東京観光ロゲイニング2026 ～渋谷再発見2days～</a>（日程・時刻・会場・持ち物・荷物/更衣室）</li>
+      <li><a href="https://www.sportsentry.ne.jp/event/t/105460">スポーツエントリー — 東京観光ロゲイニング2026 ～渋谷再発見2days～</a>（両部門の時刻・会場・持ち物・荷物/更衣室。<b>部門は3時間と5時間の2つのみ</b>）</li>
       <li><a href="https://s-mountain.com/hakuba/about/">白馬国際クラシック 大会概要（公式）</a>（種目・スタート時刻・受付・会場・荷物・必携装備）</li>
       <li>大宮 17:49 → 長野 18:47 は<b>本人手配済みのきっぷ</b>／長野〜白馬は<b>手配済みの車</b>。この2件が本ページで唯一の一次情報。</li>
       <li>長野〜白馬の距離・所要：<a href="https://www.rome2rio.com/ja/s/%E9%95%B7%E9%87%8E%E5%B8%82/%E7%99%BD%E9%A6%AC%E6%9D%91">Rome2Rio</a>（43.3km / 1時間3分）／<a href="http://www.ndoro.or.jp/contents/content0078.html">長野県道路公社 — ドライブコース白馬長野</a>（オリンピック道路）</li>
@@ -649,9 +704,29 @@ td strong{font-weight:700}
       <li><a href="https://kohmeisen.com/">光明泉</a> ／ <a href="https://kairyou-yu.com/about/">改良湯（営業案内・土曜定休）</a></li>
       <li>渋谷駅ロッカー：<a href="https://www.jalan.net/news/article/294205/">じゃらんニュース</a> ／ <a href="https://tokyolucci.jp/shibuya-coinlocker">東京ルッチ</a>（いずれも第三者情報）</li>
     </ul>
-    <p class="stamp">作成 2026-09-07 ／ 更新 2026-09-07（新幹線・車の確定を反映）／ 裏の取れていない項目は §06 に分離。</p>
+    <p class="stamp">作成 2026-09-07 ／ 更新 2026-09-07（新幹線・車の確定を反映／部門スイッチを追加）／ 裏の取れていない項目は §06 に分離。</p>
   </footer>
 
 </div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.seg-btn'));
+  function apply(v) {
+    root.setAttribute('data-div', v);
+    btns.forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-set') === v ? 'true' : 'false');
+    });
+    try { localStorage.setItem('hakuba-div', v); } catch (e) {}
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('hakuba-div'); } catch (e) {}
+  apply(saved === '3' ? '3' : '5');
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.getAttribute('data-set')); });
+  });
+})();
+</script>
 </body>
 </html>
