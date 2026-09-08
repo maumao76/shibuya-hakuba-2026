@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="9/12 渋谷ロゲイニングから 9/13 白馬トレイルランまで、風呂・荷物・移動の接続を1枚にまとめた行動計画。">
+<meta name="description" content="9/12 渋谷ロゲイニングから 9/13 白馬トレイルランまで、2人の動きを時間軸で並べた行動計画。">
 <title>渋谷から白馬へ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,6 @@
   --alert:#a2382a;
   --alert-soft:#f7e3dd;
   --shadow:0 1px 2px rgba(25,28,30,.05), 0 10px 28px rgba(25,28,30,.055);
-  --rail:2px;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -87,33 +86,8 @@ body{
 .wrap{max-width:940px;margin:0 auto;padding:0 22px 80px}
 h1,h2,h3{font-family:'Zen Old Mincho','Yu Mincho',serif;font-weight:600;text-wrap:balance;margin:0}
 
-/* ---------- division switch: 5h is the default when no attribute is set ---------- */
-/* revert (not inline) so a <p>/<li> comes back as block and a <span> as inline */
-.v3{display:none}
-:root[data-div="3"] .v3{display:revert}
-/* a timeline row is a grid, not the UA's list-item, so revert is wrong for it */
-:root[data-div="3"] li.v3{display:grid}
-:root[data-div="3"] .v5{display:none}
-
-.seg-wrap{
-  background:var(--surface);border:1px solid var(--line);border-radius:4px;
-  padding:15px 17px;margin-bottom:24px;box-shadow:var(--shadow);
-  display:flex;flex-wrap:wrap;align-items:center;gap:14px;
-}
-.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:3px;overflow:hidden;flex:0 0 auto}
-.seg-btn{
-  font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.04em;
-  padding:8px 16px;border:none;background:var(--surface-2);color:var(--ink-2);
-  cursor:pointer;transition:background .12s ease,color .12s ease;
-}
-.seg-btn + .seg-btn{border-left:1px solid var(--line-strong)}
-.seg-btn:hover{background:var(--city-soft);color:var(--city)}
-.seg-btn[aria-pressed="true"]{background:var(--city);color:#fff;font-weight:600}
-.seg-note{margin:0;font-size:12.8px;color:var(--muted);flex:1 1 260px;min-width:0}
-.seg-note b{color:var(--ink-2)}
-
 /* ---------- hero ---------- */
-.hero{border-bottom:1px solid var(--line);background:var(--surface);}
+.hero{border-bottom:1px solid var(--line);background:var(--surface)}
 .hero-in{max-width:940px;margin:0 auto;padding:52px 22px 38px}
 .eyebrow{
   font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;
@@ -124,7 +98,7 @@ h1,h2,h3{font-family:'Zen Old Mincho','Yu Mincho',serif;font-weight:600;text-wra
 .anchors{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
 .anchor{
   display:flex;flex-direction:column;gap:2px;padding:10px 15px;
-  border:1px solid var(--line);border-radius:3px;background:var(--ground);min-width:124px;
+  border:1px solid var(--line);border-radius:3px;background:var(--ground);min-width:118px;
 }
 .anchor .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace}
 .anchor .v{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
@@ -140,7 +114,7 @@ section{margin-top:56px}
 
 /* ---------- locked strip ---------- */
 .locked{
-  display:grid;gap:0;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
   border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--surface);
   box-shadow:var(--shadow);
 }
@@ -154,14 +128,57 @@ section{margin-top:56px}
 .locked .cell .sub{font-size:12.5px;color:var(--ink-2);display:block;margin-top:2px}
 @media (max-width:680px){.locked .cell{border-right:none;border-bottom:1px solid var(--line)}}
 
-/* done strip */
 .done{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .done span{
   font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:4px 10px;border-radius:2px;
   background:var(--alp-soft);border:1px solid var(--alp-2);color:var(--alp);
 }
 
-/* ---------- tags ---------- */
+/* ---------- two-lane timeline ---------- */
+.tl2-scroll{overflow-x:auto}
+.tl2{
+  display:grid;grid-template-columns:74px 1fr 1fr;min-width:620px;
+  border:1px solid var(--line);border-radius:4px;overflow:hidden;
+  background:var(--surface);box-shadow:var(--shadow);
+}
+.tl2 > *{padding:9px 13px;border-top:1px solid var(--line);font-size:13.8px}
+.tl2 > .hd{
+  border-top:none;background:var(--surface-2);
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);font-weight:500;
+}
+.tl2 > .hd.a{color:var(--city)}
+.tl2 > .hd.b{color:var(--alert)}
+.tl2 .tt{
+  font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;
+  font-size:13px;font-weight:600;color:var(--muted);text-align:right;
+  background:var(--ground);
+}
+.tl2 .a{border-left:3px solid var(--city-soft)}
+.tl2 .b{border-left:3px solid var(--alert-soft)}
+.tl2 .none{color:var(--line-strong)}
+.tl2 .idle{color:var(--muted)}
+.tl2 .both{
+  grid-column:span 2;background:var(--surface-2);
+  border-left:3px solid var(--line-strong);
+}
+.tl2 .both b{color:var(--ink)}
+.tl2 .mark{font-weight:700}
+.tl2 .tt.big{color:var(--ink);font-size:13.5px}
+
+/* ---------- day 2 list ---------- */
+.d2{list-style:none;margin:0;padding:0;display:grid;
+  border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.d2 li{display:grid;grid-template-columns:74px 1fr;border-top:1px solid var(--line)}
+.d2 li:first-child{border-top:none}
+.d2 .tt{
+  font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;
+  font-size:13px;font-weight:600;color:var(--alp);text-align:right;
+  background:var(--ground);padding:9px 13px;
+}
+.d2 .c{padding:9px 13px;font-size:13.8px;border-left:3px solid var(--alp-soft)}
+
+/* ---------- tags / callout ---------- */
 .tag{
   display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;
   font-size:11px;letter-spacing:.05em;padding:2px 8px;border-radius:2px;
@@ -171,7 +188,6 @@ section{margin-top:56px}
 .tag.ok{color:var(--alp);border-color:var(--alp-2);background:var(--alp-soft)}
 .tag.warn{color:var(--alert);border-color:var(--alert);background:var(--alert-soft)}
 
-/* ---------- callout ---------- */
 .callout{
   background:var(--alert-soft);border:1px solid var(--alert);border-left-width:3px;
   border-radius:3px;padding:16px 18px;margin:22px 0;
@@ -179,51 +195,8 @@ section{margin-top:56px}
 .callout h3{font-size:16px;color:var(--alert);margin-bottom:6px}
 .callout p{margin:0;font-size:14px;color:var(--ink-2)}
 .callout p + p{margin-top:8px}
-
-/* ---------- timeline ---------- */
-.day-band{display:flex;align-items:center;gap:14px;margin:0 0 22px;flex-wrap:wrap}
-.day-band .badge{
-  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;
-  padding:5px 11px;border-radius:2px;color:#fff;background:var(--city);font-weight:600;
-}
-.day-band.alp .badge{background:var(--alp)}
-.day-band .what{font-family:'Zen Old Mincho',serif;font-size:19px}
-.day-band .where{color:var(--muted);font-size:13px;margin-left:auto;font-family:'IBM Plex Mono',monospace}
-
-.tl{list-style:none;margin:0;padding:0;position:relative}
-.tl::before{
-  content:"";position:absolute;left:74px;top:8px;bottom:8px;width:var(--rail);
-  background:var(--city-soft);border-radius:2px;
-}
-.tl.alp::before{background:var(--alp-soft)}
-.tl li{position:relative;display:grid;grid-template-columns:62px 1fr;gap:26px;padding:0 0 22px}
-.tl li::before{
-  content:"";position:absolute;left:69px;top:9px;width:12px;height:12px;border-radius:50%;
-  background:var(--surface);border:var(--rail) solid var(--city);
-}
-.tl.alp li::before{border-color:var(--alp)}
-.tl li.soft::before{border-color:var(--line-strong)}
-.tl li.key::before{background:var(--city)}
-.tl.alp li.key::before{background:var(--alp)}
-.tl .t{
-  font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;
-  font-variant-numeric:tabular-nums;color:var(--city);text-align:right;padding-top:1px;
-}
-.tl.alp .t{color:var(--alp)}
-.tl li.soft .t{color:var(--muted);font-weight:400}
-.tl .c h3{font-size:16px;margin-bottom:3px;line-height:1.5}
-.tl .c p{margin:0;font-size:13.8px;color:var(--ink-2)}
-.tl .c p + p{margin-top:5px}
-
-/* where the two divisions merge */
-.tl li.merge{margin-top:8px}
-.tl li.merge::after{
-  content:"ここから先は2人とも共通";
-  position:absolute;left:88px;top:-17px;font-family:'IBM Plex Mono',monospace;
-  font-size:10.5px;letter-spacing:.06em;color:var(--muted);
-}
-
-.ridge{display:block;width:100%;height:56px;margin:34px 0 8px;color:var(--alp-2);opacity:.5}
+.callout.calm{background:var(--alp-soft);border-color:var(--alp)}
+.callout.calm h3{color:var(--alp)}
 
 /* ---------- tables ---------- */
 .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
@@ -236,7 +209,6 @@ thead th{
 tbody tr:last-child td{border-bottom:none}
 td.num,th.num{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
 tr.pick td{background:var(--alp-soft)}
-tr.dead td{color:var(--muted)}
 td strong{font-weight:700}
 
 /* ---------- sources ---------- */
@@ -249,12 +221,7 @@ td strong{font-weight:700}
 
 @media (max-width:680px){
   .hero-in{padding:38px 20px 30px}
-  .tl::before{left:52px}
-  .tl li{grid-template-columns:44px 1fr;gap:18px}
-  .tl li::before{left:47px}
-  .tl li.merge::after{left:66px}
-  .day-band .where{width:100%;margin-left:0;order:3}
-  .anchor{flex:1 1 120px}
+  .anchor{flex:1 1 118px}
 }
 </style>
 </head>
@@ -265,11 +232,11 @@ td strong{font-weight:700}
     <h1>渋谷から白馬へ</h1>
     <p class="lede">
       土曜は渋谷でロゲイニング、日曜の朝9時には白馬でトレイルランのスタートライン。
-      宿・エントリー・新幹線・車はすべて手配済みなので、残っているのは
-      <b>渋谷から大宮へ向かう途中でどこの風呂に入るか</b>だけ。
+      部門が違って解散が1時間ずれるので、2人の動きを時間軸で横に並べてある。
+      <b>15:25 にロッカーで合流</b>してからは同じ流れ。
     </p>
     <div class="anchors">
-      <div class="anchor city"><span class="k">Sat 解散</span><span class="v"><span class="v5">15:15</span><span class="v3">14:15</span></span></div>
+      <div class="anchor city"><span class="k">合流</span><span class="v">15:25</span></div>
       <div class="anchor city"><span class="k">風呂</span><span class="v">16:10</span></div>
       <div class="anchor city"><span class="k">大宮発</span><span class="v">17:49</span></div>
       <div class="anchor alp"><span class="k">白馬着</span><span class="v">20:00</span></div>
@@ -280,26 +247,14 @@ td strong{font-weight:700}
 
 <div class="wrap">
 
-  <!-- ============ division switch ============ -->
-  <div class="seg-wrap" style="margin-top:30px">
-    <div class="seg" role="group" aria-label="ロゲイニングの部門を切り替える">
-      <button type="button" class="seg-btn" data-set="5" aria-pressed="true">5時間の部</button>
-      <button type="button" class="seg-btn" data-set="3" aria-pressed="false">3時間の部</button>
-    </div>
-    <p class="seg-note">
-      部門は <b>3時間と5時間の2つだけ</b>（4時間の部は無い）。切り替えると 9/12 の午前が連動する。
-      <b>15:25 の合流から先は2人とも共通</b>。
-    </p>
-  </div>
-
   <!-- ============ 0. 確定 ============ -->
-  <section id="locked" style="margin-top:34px">
+  <section id="locked" style="margin-top:44px">
     <div class="sec-head"><span class="num">00</span><h2>確定していること</h2></div>
     <div class="locked">
       <div class="cell">
         <span class="lab">Sat / 渋谷</span>
-        <span class="big"><span class="v5">09:45 – 15:15</span><span class="v3">10:45 – 14:15</span></span>
-        <span class="sub">ロゲイニング <span class="v5">5時間の部</span><span class="v3">3時間の部</span>（競技〜解散）</span>
+        <span class="big">09:45 – 15:15</span>
+        <span class="sub">ロゲイニング 5時間の部（相方は3時間の部）</span>
       </div>
       <div class="cell">
         <span class="lab">Sat / 新幹線</span>
@@ -319,327 +274,221 @@ td strong{font-weight:700}
     </div>
     <div class="done">
       <span>宿 — 確保済</span>
-      <span>ロゲイニング エントリー — 完了</span>
+      <span>エントリー — 完了</span>
       <span>車の受け取り — 確認済</span>
       <span>必携装備 — 確認済</span>
+      <span>風呂 — テルメ末広</span>
+      <span>ロッカー — マルチエキューブ L×2</span>
     </div>
   </section>
 
-  <!-- ============ 2. Day 1 ============ -->
+  <!-- ============ 1. Day 1 two lanes ============ -->
   <section id="day1">
-    <div class="sec-head"><span class="num">01</span><h2>9/12（土）— 渋谷 → 大宮 → 白馬</h2></div>
-
-    <div class="day-band">
-      <span class="badge">DAY 1</span>
-      <span class="what">東京観光ロゲイニング2026 ～渋谷再発見2days～</span>
-      <span class="where">渋谷2-22-6 幸和ビル 4F</span>
-    </div>
-
-    <ol class="tl">
-      <li>
-        <div class="t"><span class="v5">08:30</span><span class="v3">09:30</span></div>
-        <div class="c">
-          <h3>渋谷駅で荷物を預ける</h3>
-          <p>会場に荷物預かりは無い（「会場内にて、自己管理」）。白馬用の一式はここで切り離す。</p>
-        </div>
-      </li>
-      <li>
-        <div class="t"><span class="v5">09:00</span><span class="v3">10:00</span></div>
-        <div class="c">
-          <h3>受付（<span class="v5">9:00–9:15</span><span class="v3">10:00–10:15</span>）— 幸和ビル4F</h3>
-          <p>参加賞はここで受け取り。<b>更衣室は無い</b>（トイレを使う）。持ち物はデジタルカメラ・保険証・コンパス・携帯・筆記用具。</p>
-        </div>
-      </li>
-      <li class="soft">
-        <div class="t"><span class="v5">09:15</span><span class="v3">10:15</span></div>
-        <div class="c">
-          <h3>競技説明（<span class="v5">9:15–9:45</span><span class="v3">10:15–10:45</span>）</h3>
-          <p>ルールとMAP配布。</p>
-        </div>
-      </li>
-      <li class="key">
-        <div class="t"><span class="v5">09:45</span><span class="v3">10:45</span></div>
-        <div class="c">
-          <h3>スタート — 競技（<span class="v5">9:45–14:45・5時間</span><span class="v3">10:45–13:45・3時間</span>）</h3>
-          <p>チェックポイント約40ヶ所。翌日がレース本番なので、点数より<b>長い下り階段と立ちっぱなしを抑える</b>判断を優先したい。</p>
-        </div>
-      </li>
-      <li>
-        <div class="t"><span class="v5">15:00</span><span class="v3">14:00</span></div>
-        <div class="c">
-          <h3>集計・表彰式（<span class="v5">15:00–15:15</span><span class="v3">14:00–14:15</span>）</h3>
-          <p>ここで解散。</p>
-        </div>
-      </li>
-      <li class="soft v3">
-        <div class="t">14:15</div>
-        <div class="c">
-          <h3>1時間の待ち — 5時間の部が終わるまで</h3>
-          <p>ここは相方の待ち時間。15:25 に合流できれば過ごし方は自由。</p>
-        </div>
-      </li>
-      <li class="key merge">
-        <div class="t">15:25</div>
-        <div class="c">
-          <h3>ロッカー前で合流 → 荷物回収</h3>
-          <p>幸和ビル（青山通り沿い）から<b>南改札 西口通路まで徒歩10分前後</b>——駅の東側から西側へ横断する。回収して南改札から3・4番線へ。</p>
-        </div>
-      </li>
-      <li>
-        <div class="t">15:40</div>
-        <div class="c">
-          <h3>渋谷 → 赤羽（湘南新宿ライン・直通22分）</h3>
-          <p><b>16:02 赤羽着</b>。乗換なしの1本で、3・4番線は南改札から1階でつながっている。北口のタクシー乗り場からテルメ末広まで4〜5分。</p>
-        </div>
-      </li>
-      <li class="key">
-        <div class="t">16:10</div>
-        <div class="c">
-          <h3>テルメ末広 — 55分</h3>
-          <p>赤羽駅北口からタクシーで4〜5分（<b>¥700前後</b>。初乗り1.0km ¥500＋232mごと¥100）。歩けば15分だが、5時間歩いた後にそれをやる意味はない。
-          14:00開店なので<b>待たされる心配はゼロ</b>。露天・漢方薬湯・井戸水の水風呂・ボナサウナ。</p>
-          <p><b>帰りの1台は入る前に手配しておく</b>——志茂は住宅街で流しを拾いにくい。ここだけが唯一の詰まりどころ。</p>
-        </div>
-      </li>
-      <li>
-        <div class="t">17:05</div>
-        <div class="c">
-          <h3>出発 → 赤羽 17:12</h3>
-          <p>17:20前後の湘南新宿ラインで<b>大宮 17:35</b>、新幹線まで14分。余裕を厚くするなら<b>17:00に出て 17:15発 → 大宮 17:30（19分）</b>。赤羽〜大宮は14〜16分。</p>
-        </div>
-      </li>
-      <li class="key">
-        <div class="t">17:30</div>
-        <div class="c">
-          <h3>大宮 着 — 夕食を買う</h3>
-          <p>新幹線まで約20分。<b>白馬着が20時なので、現地の店は閉まっている前提</b>で駅弁と翌朝の補給をここで確保する。</p>
-        </div>
-      </li>
-      <li class="key">
-        <div class="t">17:49</div>
-        <div class="c">
-          <h3>大宮 → 長野（北陸新幹線・手配済み）</h3>
-          <p>58分。<b>長野 18:47 着</b>。</p>
-        </div>
-      </li>
-      <li>
-        <div class="t">19:00</div>
-        <div class="c">
-          <h3>長野で車に乗る</h3>
-          <p>合流・積み込みで15分弱。ここから先は時刻表に縛られない。</p>
-        </div>
-      </li>
-      <li class="key">
-        <div class="t">20:00</div>
-        <div class="c">
-          <h3>白馬 着 → 宿</h3>
-          <p>43.3km・約1時間3分（オリンピック道路）。急勾配やヘアピンは少ないが<b>山間路の夜間走行</b>なので余裕を持って出る。
-          装備の最終確認（ゼッケン・チップ・レイン・ライト）は寝る前に終わらせる。</p>
-        </div>
-      </li>
-    </ol>
-  </section>
-
-  <!-- ============ 3. 風呂 ============ -->
-  <section id="bath">
-    <div class="sec-head"><span class="num">02</span><h2>風呂 — 渋谷 → 大宮の途中</h2></div>
+    <div class="sec-head"><span class="num">01</span><h2>9/12（土）— 2人の動き</h2></div>
     <p class="sec-note">
-      <b>テルメ末広で確定</b>。条件は「銭湯価格」「早く開いている」「16:45〜17:05 に出れば大宮 17:49 に間に合う」で、
-      渋谷で最有力の改良湯は土曜が定休、中目黒の光明泉は大宮と逆方向、赤羽の岩の湯は開店15:30・徒歩11分なので、いずれも外してある。下は比較の記録。
+      会場は <b>渋谷2-22-6 幸和ビル 4F</b>（青山通り沿い）。灰色の行は2人一緒、色のついた行はそれぞれ別。
+      <b>相方は14:15に終わって1時間浮く</b>——過ごし方は本人に任せる。風呂も、一緒に行くなら行く。
     </p>
-    <div class="tbl-wrap">
-      <table>
-        <thead>
-          <tr><th>候補</th><th class="num">駅から</th><th class="num">営業 / 料金</th><th>使い勝手</th></tr>
-        </thead>
-        <tbody>
-          <tr class="pick">
-            <td><strong>テルメ末広</strong><br><span class="tag ok">これで行く</span><br>北区志茂5-16-14</td>
-            <td class="num">渋谷→赤羽 <b>直通22分</b><br>赤羽北口から<br><b>タクシー4〜5分</b><br>（徒歩なら15分）</td>
-            <td class="num"><b>14:00–23:00</b><br>定休 金曜<br>¥600<br>サウナ +¥300<br><span style="color:var(--muted)">＋タクシー往復 ¥1,400前後</span></td>
-            <td><b>乗換ゼロ</b>で赤羽まで1本、しかも<b>開店14:00</b>なので待たされない。赤羽〜大宮が14〜16分と近いので<b>戻りの余裕もいちばん厚く、入浴に1時間取れる</b>（妙法湯は45分）。露天・漢方薬湯・井戸水の水風呂・ボナサウナ80〜85℃。徒歩15分という唯一の難点はタクシーで潰す。備付は無料のリンスインシャンプーとボディソープ、貸フェイスタオル50円・バスタオル100円。</td>
-          </tr>
-          <tr>
-            <td><strong>妙法湯</strong><br>豊島区西池袋4-32-4</td>
-            <td class="num">渋谷→池袋 11分<br>＋西武池袋線1駅<br>椎名町北口 <b>徒歩2分</b></td>
-            <td class="num">15:00–25:00<br>定休 月曜<br><b>¥550</b><br>サウナ ¥950<br>（貸タオル・バスタオル付）</td>
-            <td>2019年にリニューアルした銭湯で、<b>軟水炭酸シルキー風呂・サウナ110℃・水風呂</b>。<b>シャンプー／ボディソープ／コンディショナー／化粧水／乳液が備え付け</b>、貸タオル30円・バスタオル100円なので<b>手ぶらで入れる</b>——ロゲイニング後にこれは効く。難点は池袋での乗換1回（同一駅・5〜8分）。</td>
-          </tr>
-          <tr>
-            <td><strong>小松湯</strong><br>北池袋</td>
-            <td class="num">渋谷→池袋 11分<br>＋東武東上線1駅<br>北池袋 徒歩7分</td>
-            <td class="num">15:00–25:00<br>定休 月・木<br><b>¥460</b></td>
-            <td>3つの中で<b>最安</b>。ジェットバス・バイブラバス・薬湯・水風呂。ただし公開されている情報が少なく、サウナの有無を含めて中身が読みにくい。値段だけで選ぶならここ。</td>
-          </tr>
-          <tr>
-            <td><strong>テルマー湯 新宿</strong><br><span class="tag">乗換ゼロ</span><br>新宿区歌舞伎町1-1-2</td>
-            <td class="num">渋谷→新宿 6分<br>JR新宿東口 徒歩9分</td>
-            <td class="num">24時間・無休<br>土日祝 一般 ¥2,800</td>
-            <td>銭湯ではないが<b>唯一、乗換なしで行ける</b>。24時間営業なので閉店を気にしなくていい。値段は銭湯の5倍なので、確実性をいくらで買うかという話になる。</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <div class="tl2-scroll">
+      <div class="tl2">
+        <div class="hd"></div>
+        <div class="hd a">Mao — 5時間の部</div>
+        <div class="hd b">相方 — 3時間の部</div>
+
+        <div class="tt">08:30</div>
+        <div class="a">荷物を預ける（マルチエキューブ・南改札西口通路）</div>
+        <div class="b none">—</div>
+
+        <div class="tt">09:00</div>
+        <div class="a">受付（9:00–9:15）</div>
+        <div class="b none">—</div>
+
+        <div class="tt">09:15</div>
+        <div class="a">競技説明</div>
+        <div class="b none">—</div>
+
+        <div class="tt">09:30</div>
+        <div class="a idle">—</div>
+        <div class="b">荷物を預ける（同じ場所・別ロッカー）</div>
+
+        <div class="tt big">09:45</div>
+        <div class="a mark">スタート</div>
+        <div class="b none">—</div>
+
+        <div class="tt">10:00</div>
+        <div class="a idle">競技中</div>
+        <div class="b">受付（10:00–10:15）</div>
+
+        <div class="tt">10:15</div>
+        <div class="a idle">競技中</div>
+        <div class="b">競技説明</div>
+
+        <div class="tt big">10:45</div>
+        <div class="a idle">競技中</div>
+        <div class="b mark">スタート</div>
+
+        <div class="tt">13:45</div>
+        <div class="a idle">競技中</div>
+        <div class="b">ゴール</div>
+
+        <div class="tt">14:00</div>
+        <div class="a idle">競技中</div>
+        <div class="b">表彰式（14:00–14:15）</div>
+
+        <div class="tt big">14:15</div>
+        <div class="a idle">競技中</div>
+        <div class="b mark">解散 — ここから1時間は自由</div>
+
+        <div class="tt">14:45</div>
+        <div class="a">ゴール</div>
+        <div class="b idle">自由（先に赤羽へ行って先に入るのもあり）</div>
+
+        <div class="tt">15:00</div>
+        <div class="a">表彰式（15:00–15:15）</div>
+        <div class="b idle">自由</div>
+
+        <div class="tt big">15:15</div>
+        <div class="a mark">解散</div>
+        <div class="b idle">自由</div>
+
+        <div class="tt big">15:25</div>
+        <div class="both"><b>ロッカーで合流 → 荷物回収</b>（会場から南改札 西口通路まで徒歩10分）</div>
+
+        <div class="tt">15:40</div>
+        <div class="both">渋谷発 — 湘南新宿ライン（3・4番線は南改札から）</div>
+
+        <div class="tt">16:02</div>
+        <div class="both">赤羽 着 → 北口からタクシー4〜5分</div>
+
+        <div class="tt big">16:10</div>
+        <div class="both"><b>テルメ末広</b> — 50分ほど</div>
+
+        <div class="tt">17:00</div>
+        <div class="both">出発 → 赤羽 17:07（ここから先は Mao のみ／相方は同行するかを相談）</div>
+
+        <div class="tt">17:15</div>
+        <div class="a">赤羽発 — 湘南新宿ライン</div>
+        <div class="b idle">解散</div>
+
+        <div class="tt">17:30</div>
+        <div class="a">大宮 着 — 夕食を買う</div>
+        <div class="b none">—</div>
+
+        <div class="tt big">17:49</div>
+        <div class="a mark">大宮発 — 北陸新幹線</div>
+        <div class="b none">—</div>
+
+        <div class="tt">18:47</div>
+        <div class="a">長野 着 → 車に乗る</div>
+        <div class="b none">—</div>
+
+        <div class="tt big">20:00</div>
+        <div class="a mark">白馬 着 → 宿</div>
+        <div class="b none">—</div>
+      </div>
     </div>
   </section>
 
-  <!-- ============ 4. ロッカー ============ -->
+  <!-- ============ 2. 風呂 ============ -->
+  <section id="bath">
+    <div class="sec-head"><span class="num">02</span><h2>風呂 — テルメ末広</h2></div>
+    <p class="sec-note">
+      北区志茂5-16-14。<b>14:00–23:00 / 定休 金曜 / ¥600（サウナ +¥300）</b>。
+      渋谷から赤羽まで湘南新宿ラインで<b>乗換ゼロ・22分</b>、赤羽北口からタクシー4〜5分（<b>¥700前後</b>）。
+      露天・漢方薬湯・井戸水の水風呂・ボナサウナ80〜85℃。備付は無料のリンスインシャンプーとボディソープ、貸フェイスタオル50円・バスタオル100円。
+    </p>
+    <div class="callout">
+      <h3>帰りの1台は、入る前に手配しておく。</h3>
+      <p>
+        志茂は住宅街なので<b>流しのタクシーを拾えない</b>。行きは赤羽駅北口の乗り場から乗れるが、帰りは配車アプリで呼ぶことになる。
+        <b>ここがこの日で唯一の詰まりどころ</b>。歩けば15分なので詰んではいないが、その15分は予定に入っていない。
+      </p>
+    </div>
+    <p class="sec-note" style="margin-top:22px">
+      不採用にした候補：<b>改良湯</b>（渋谷・土曜定休）／<b>光明泉</b>（中目黒・大宮と逆方向）／<b>岩の湯</b>（赤羽・15:30開店で駅から徒歩11分）／
+      <b>妙法湯</b>（椎名町・徒歩2分¥550と良いが池袋で乗換1回・入浴が45分に縮む）／<b>テルマー湯 新宿</b>（乗換ゼロだが¥2,800）。
+    </p>
+  </section>
+
+  <!-- ============ 3. ロッカー ============ -->
   <section id="locker">
     <div class="sec-head"><span class="num">03</span><h2>渋谷のロッカー</h2></div>
     <p class="sec-note">
-      <b>結論：渋谷駅 改札外・南改札 西口通路 のマルチエキューブを、Lサイズで前日までに予約する。</b>
-      理由は3つ——予約で確保できる／改札の外なので朝に会場へ出られる／<b>湘南新宿ラインの3・4番線に一番近い改札</b>なので夕方の出発が最短。
+      <b>マルチエキューブ 渋谷駅 改札外・南改札 西口通路で、Lサイズを2つ予約する。</b>
+      預ける時刻が 8:30 と 9:30 でずれるので、1つを共用すると<b>途中で開け直せるかどうかに賭ける</b>ことになる。それは公式には書かれていないので、素直に2つ取る。
     </p>
-
-    <div class="callout" style="background:var(--alp-soft);border-color:var(--alp)">
-      <h3 style="color:var(--alp)">予約するのはここ — マルチエキューブ 渋谷駅 南改札 西口通路</h3>
-      <p>
-        <b>サイズは L（高86 × 幅34 × 奥65cm）</b>。ザックは幅で決まるので34cmが効く制約だが、トレラン用20〜30Lなら縦に入る。
-        <b>Lなら2人分をまとめられる</b>ので、預け入れの時刻が揃うならこれが最安。
-        料金は <b>利用料¥900＋予約料¥500＝¥1,400</b>（M なら ¥700＋¥500＝¥1,200）。確認時点で <b>L が46コ空き</b>。
-      </p>
-      <p>
-        <b>1日単位で、起算点は AM2:00。</b>だから 8:30 に預けて 15:25 に出すのは<b>まるごと1日分ひとつ</b>で足りる。最大3日。
-        予約は<b>利用日の1か月前 AM2:00 から、当日は利用直前まで</b>（空きがあれば）。支払いはクレジットカードで<b>予約時に決済</b>。
-      </p>
-      <p>
-        <b>キャンセル無料は利用日当日の AM2:00 まで</b>——つまり <b>9/12 の AM2:00 を過ぎたら返金なし</b>。当日予約は即時確約でキャンセル自体できない。
-        雨で中止の可能性を見るなら、前日のうちに判断すること。
-      </p>
-      <p>
-        <b>2つ以上予約するならプレミアム会員（月額¥500）のほうが安い。</b>予約料¥500は1回ごとにかかるので、
-        2口取ると予約料だけで¥1,000。会員なら予約料が¥0になり、M×2 が ¥2,400 → <b>¥1,900</b> になる。
-        L を1つ共用（¥1,400）が最安なのは変わらない。
-      </p>
-    </div>
-
     <div class="tbl-wrap">
       <table>
         <thead>
-          <tr><th>場所</th><th class="num">予約</th><th class="num">サイズ・料金</th><th>判断</th></tr>
+          <tr><th>項目</th><th>内容</th></tr>
         </thead>
         <tbody>
           <tr class="pick">
-            <td><strong>マルチエキューブ<br>南改札 西口通路</strong><br><span class="tag ok">ここを予約</span><br>改札外</td>
-            <td class="num"><b>可</b><br>1か月前〜直前</td>
-            <td class="num">SS ¥300 / S ¥500<br>M ¥700 / <b>L ¥900</b><br>＋予約料 ¥500</td>
-            <td>空き L46・M20・S29（確認時点）。<b>3・4番線に最も近い改札の外</b>で、15:40の出発に直結。難点は会場（青山通り沿い・駅の東側）から<b>駅を横断して徒歩10分</b>。</td>
+            <td><strong>場所</strong></td>
+            <td>渋谷駅 <b>改札外</b>・南改札 西口通路（<b>3・4番線＝湘南新宿ラインに最も近い改札の外</b>）。会場からは駅を横断して徒歩10分。</td>
           </tr>
           <tr>
-            <td><strong>マルチエキューブ<br>ハチ公口 1･2番線エスカレーター付近</strong><br><span class="tag warn">改札内</span></td>
-            <td class="num">可</td>
-            <td class="num">同上</td>
-            <td><b>改札内なので使えない。</b>朝ここに預けると会場へ行くのに一度出場することになり、夕方は再入場が要る。空きも L14・M1・S1 と薄い。</td>
+            <td><strong>サイズ</strong></td>
+            <td><b>L＝高86 × 幅34 × 奥55〜65cm</b>。30Lクラスのザックを<b>立てて入れられる</b>のがLだけ（Mは高さ50cmで立たず、寝かせるしかないので「予約専用モデルは奥行き55cm」に当たると余白がなくなる）。差額¥400でその不確実性を消す。</td>
           </tr>
           <tr>
-            <td><strong>東京メトロ<br>宮益坂中央改札付近</strong></td>
-            <td class="num"><b>不可</b><br>当日勝負</td>
-            <td class="num">小400 ×59 / 中500 ×42<br>大700 ×15 / 特大900 ×1</td>
-            <td>計117台で<b>会場にいちばん近い（徒歩5〜6分）</b>。予約できないのが唯一にして致命的な差。マルチエキューブが埋まっていた場合の第二候補。</td>
+            <td><strong>料金</strong></td>
+            <td>L 利用料 ¥900 ＋ 予約料 ¥500 ＝ <b>¥1,400 × 2 = ¥2,800</b>。<b>1日単位・起算 AM2:00</b> なので 8:30〜15:25 は1日分に収まる。支払いはクレジットカードで予約時決済。</td>
           </tr>
           <tr>
-            <td><strong>ecbo cloak</strong><br>店舗の空きスペース</td>
-            <td class="num">可</td>
-            <td class="num">店舗による</td>
-            <td>渋谷は加盟店が多く当日予約もできるが、<b>店の営業時間に縛られる</b>——8:30に開いている加盟店は限られるので、今回の朝の預け入れには向かない。</td>
+            <td><strong>キャンセル</strong></td>
+            <td><b>9/12 の AM2:00 まで無料</b>。それ以降は返金なし。当日予約は即時確約でキャンセル不可。</td>
+          </tr>
+          <tr>
+            <td><strong>使わない選択肢</strong></td>
+            <td><b>ハチ公口 1･2番線エスカレーター付近は「改札内」</b>（公式のページタイトルとパンくずで明記）。朝そこに預けると会場へ出るのに出場が要る。<b>東京メトロ 宮益坂中央改札</b>は会場に近く大型15台だが<b>予約できない</b>ので第二候補どまり。<b>ecbo cloak</b> は店舗の営業時間に縛られ、8:30に開いている加盟店が限られる。</td>
           </tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <!-- ============ ridge divider ============ -->
-  <svg class="ridge" viewBox="0 0 900 56" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <path d="M0 54 L96 30 L150 41 L228 12 L300 34 L352 25 L430 46 L505 18 L560 33 L640 6 L712 30 L780 21 L846 40 L900 28"
-          fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-  </svg>
-
-  <!-- ============ 5. Day 2 ============ -->
+  <!-- ============ 4. Day 2 ============ -->
   <section id="day2">
     <div class="sec-head"><span class="num">04</span><h2>9/13（日）— 白馬</h2></div>
-
-    <div class="day-band alp">
-      <span class="badge">DAY 2</span>
-      <span class="what">白馬国際クラシック 2026 — 12km</span>
-      <span class="where">八方第二駐車場 発着</span>
-    </div>
+    <p class="sec-note">
+      白馬国際クラシック 12km。発着は<b>八方第二駐車場</b>。
+    </p>
 
     <div class="callout">
       <h3>前日受付には行けない。当日受付が前提。</h3>
       <p>
-        公式の前日受付は <b>9/12（土）12:00–17:00・八方第二駐車場</b>で、渋谷にいる時間と完全に重なる。
-        使うのは <b>当日受付（9/13 6:00〜各種目スタート30分前）</b>。12kmは9:00スタートなので <b>8:30が締切</b>。
-        参加賞も朝に受け取ることになる。
+        前日受付は <b>9/12（土）12:00–17:00</b> で、渋谷にいる時間と完全に重なる。使うのは
+        <b>当日受付（6:00〜スタート30分前）＝12kmは 8:30 が締切</b>。FAQに「前日か当日いずれかにお越しいただければ結構です」と明記があるので、これで問題ない。
       </p>
     </div>
 
-    <ol class="tl alp">
-      <li>
-        <div class="t">06:30</div>
-        <div class="c">
-          <h3>宿発 → 八方第二駐車場</h3>
-          <p>会場に駐車場があるが、<b>50km（7:00発）・29km（8:30発）の選手が先に入っている</b>時間帯。混雑を見込んで早めに出る。</p>
-        </div>
-      </li>
-      <li class="key">
-        <div class="t">07:00</div>
-        <div class="c">
-          <h3>当日受付（6:00 開始 / 12kmは 8:30 締切）</h3>
-          <p>ゼッケン・計測チップ・参加賞を受け取る。締切ぎりぎりではなく<b>7時台に済ませて余白を作る</b>。</p>
-        </div>
-      </li>
-      <li class="soft">
-        <div class="t">—</div>
-        <div class="c">
-          <h3>更衣室・荷物</h3>
-          <p>更衣室はスタート地点にあり。荷物置き場はスタート・ゴール隣の八方文化会館だが<b>スタッフ常駐なし</b>。車があるので貴重品は車に置くほうが早い。</p>
-        </div>
-      </li>
-      <li class="key">
-        <div class="t">09:00</div>
-        <div class="c">
-          <h3>12km スタート（制限4時間 / 13:00）</h3>
-          <p>要求ペース 3.0km/h ＝ <b>全区間歩いても完走できる</b>制限。核心は岩岳への一本登りと、その後のテクニカルな下り。登りは歩く・下りで走る。</p>
-        </div>
-      </li>
-    </ol>
+    <ul class="d2">
+      <li><span class="tt">06:30</span><span class="c">宿発 → 八方第二駐車場（50km・29kmの選手が先に入っている時間帯）</span></li>
+      <li><span class="tt">07:00</span><span class="c">当日受付 — ゼッケン・計測チップ・参加賞</span></li>
+      <li><span class="tt">08:30</span><span class="c">受付の締切</span></li>
+      <li><span class="tt">09:00</span><span class="c"><b>12km スタート</b>（制限4時間 / 13:00）— 登りは歩く・下りで走る</span></li>
+      <li><span class="tt">13:00</span><span class="c">制限時間</span></li>
+    </ul>
   </section>
 
   <!-- ============ sources ============ -->
   <footer class="src">
     <h2>Sources</h2>
     <ul>
-      <li><a href="https://www.sportsentry.ne.jp/event/t/105460">スポーツエントリー — 東京観光ロゲイニング2026 ～渋谷再発見2days～</a>（両部門の時刻・会場・持ち物・荷物/更衣室。<b>部門は3時間と5時間の2つのみ</b>）</li>
-      <li><a href="https://s-mountain.com/hakuba/about/">白馬国際クラシック 大会概要（公式）</a>（種目・スタート時刻・受付・会場・荷物）</li>
+      <li><a href="https://www.sportsentry.ne.jp/event/t/105460">スポーツエントリー — 東京観光ロゲイニング2026 ～渋谷再発見2days～</a>（両部門の時刻・会場・持ち物。部門は3時間と5時間の2つのみ）</li>
+      <li><a href="https://s-mountain.com/hakuba/about/">白馬国際クラシック 大会概要（公式）</a> ／ <a href="https://s-mountain.com/hakuba/faq">FAQ（受付は前日・当日いずれかで可）</a></li>
       <li>大宮 17:49 → 長野 18:47 のきっぷ、長野〜白馬の車、白馬の宿はいずれも<b>手配済み・本人確認</b>。</li>
-      <li>風呂：<a href="https://myohoyu.com/">妙法湯（公式・営業案内）</a> ／ <a href="http://www.therme.co.jp/">テルメ末広（公式）</a> ／ <a href="https://iiofuro.com/tokyo/station/tky00120/">いいお風呂.com — 池袋駅近くの銭湯（小松湯）</a> ／ <a href="https://thermae-yu.jp/user-guide/">テルマー湯 新宿店 — ご利用案内・料金</a> ／ <a href="https://www.1010.or.jp/map/archives/area/%E8%B1%8A%E5%B3%B6%E5%8C%BA">東京銭湯マップ — 豊島区</a></li>
-      <li>ロッカー：<a href="https://multiecube.com/location/1050">マルチエキューブ — 渋谷駅 改札外 南改札 西口通路</a>（サイズ・料金・空き・予約） ／ <a href="https://media.jreast.co.jp/articles/4630">JREメディア — マルチエキューブの使い方</a> ／ <a href="https://www.jre-sl.co.jp/news/20241016_ho01/">JR東日本スマートロジスティクス — To Locca サービス終了のご案内</a> ／ <a href="https://cloak.ecbo.io/ja/jpn/city/tokyo/395">ecbo cloak — 渋谷</a> ／ <a href="https://www.jalan.net/news/article/294205/">じゃらんニュース（渋谷駅ロッカー・第三者情報）</a></li>
+      <li>ロッカー：<a href="https://multiecube.com/location/1050">マルチエキューブ — 渋谷駅 改札外 南改札 西口通路</a> ／ <a href="https://multiecube.com/faq/">同 よくある質問</a>（サイズ・1日単位・予約とキャンセル）</li>
+      <li>風呂：<a href="http://www.therme.co.jp/">テルメ末広（公式）</a> ／ <a href="https://myohoyu.com/">妙法湯</a> ／ <a href="https://kairyou-yu.com/about/">改良湯（土曜定休）</a></li>
+      <li>タクシー：<a href="https://www.jiji.com/jc/article?k=2026031700905&g=eco">東京23区の運賃改定（2026年4月20日〜・初乗り1.0km ¥500／232mごと¥100）</a></li>
       <li>長野〜白馬：<a href="https://www.rome2rio.com/ja/s/%E9%95%B7%E9%87%8E%E5%B8%82/%E7%99%BD%E9%A6%AC%E6%9D%91">Rome2Rio</a>（43.3km / 1時間3分）／<a href="http://www.ndoro.or.jp/contents/content0078.html">長野県道路公社 — オリンピック道路</a></li>
-      <li>タクシー：<a href="https://www.jiji.com/jc/article?k=2026031700905&g=eco">時事ドットコム — 東京23区タクシー運賃改定（2026年4月20日〜・初乗り1.0km ¥500／232mごと¥100）</a></li>
-      <li>渋谷〜大宮：<a href="https://ekitan.com/timetable/railway/line-station/187-8/d1">駅探 — 渋谷駅 JR湘南新宿ライン 大宮方面</a>（所要35〜39分。土曜の実発車時刻は当日ダイヤで確認）</li>
+      <li>渋谷〜赤羽〜大宮：<a href="https://ekitan.com/timetable/railway/line-station/187-8/d1">駅探 — 渋谷駅 JR湘南新宿ライン 大宮方面</a>（渋谷〜大宮35〜39分／赤羽〜大宮14〜16分）</li>
     </ul>
-    <p class="stamp">作成 2026-09-07 ／ 更新 2026-09-08（テルメ末広で確定・ロッカーはマルチエキューブ 南改札西口通路をL予約）</p>
+    <p class="stamp">更新 2026-09-08 — 2レーン表示に変更・ロッカーは L×2</p>
   </footer>
 
 </div>
-
-<script>
-(function () {
-  var root = document.documentElement;
-  var btns = Array.prototype.slice.call(document.querySelectorAll('.seg-btn'));
-  function apply(v) {
-    root.setAttribute('data-div', v);
-    btns.forEach(function (b) {
-      b.setAttribute('aria-pressed', b.getAttribute('data-set') === v ? 'true' : 'false');
-    });
-    try { localStorage.setItem('hakuba-div', v); } catch (e) {}
-  }
-  var saved = null;
-  try { saved = localStorage.getItem('hakuba-div'); } catch (e) {}
-  apply(saved === '3' ? '3' : '5');
-  btns.forEach(function (b) {
-    b.addEventListener('click', function () { apply(b.getAttribute('data-set')); });
-  });
-})();
-</script>
 </body>
 </html>
