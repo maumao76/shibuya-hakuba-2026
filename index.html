@@ -158,11 +158,14 @@ section{margin-top:56px}
 .tl2 .b{border-left:3px solid var(--alert-soft)}
 .tl2 .none{color:var(--line-strong)}
 .tl2 .idle{color:var(--muted)}
-.tl2 .both{
-  grid-column:span 2;background:var(--surface-2);
-  border-left:3px solid var(--line-strong);
+/* one merged cell for the 3h lane, 14:15 → 17:15 (header is row 1, so 14:15 is row 12) */
+.tl2 .free{
+  grid-column:3;grid-row:12 / span 10;
+  background:var(--surface-2);border-left:3px solid var(--alert-soft);
+  display:flex;flex-direction:column;justify-content:center;gap:6px;
 }
-.tl2 .both b{color:var(--ink)}
+.tl2 .free .big{font-weight:700;font-size:16px}
+.tl2 .free .note{font-size:12.8px;color:var(--muted);line-height:1.65}
 .tl2 .mark{font-weight:700}
 .tl2 .tt.big{color:var(--ink);font-size:13.5px}
 
@@ -233,7 +236,7 @@ td strong{font-weight:700}
     <p class="lede">
       土曜は渋谷でロゲイニング、日曜の朝9時には白馬でトレイルランのスタートライン。
       部門が違って解散が1時間ずれるので、2つの部門の動きを時間軸で横に並べてある。
-      <b>15:25 にロッカーで合流</b>してからは同じ流れ。
+      <b>3時間の部は14:15に終わってからは自由</b>。
     </p>
     <div class="anchors">
       <div class="anchor city"><span class="k">合流</span><span class="v">15:25</span></div>
@@ -286,8 +289,7 @@ td strong{font-weight:700}
   <section id="day1">
     <div class="sec-head"><span class="num">01</span><h2>9/12（土）— 2人の動き</h2></div>
     <p class="sec-note">
-      会場は <b>渋谷2-22-6 幸和ビル 4F</b>（青山通り沿い）。灰色の行は一緒に動く区間、色のついた行は別行動。
-      <b>3時間の部は14:15に終わって1時間浮く</b>——先に風呂へ行くのも、別の場所で過ごすのも自由。
+      会場は <b>渋谷2-22-6 幸和ビル 4F</b>（青山通り沿い）。左が時間軸、右の2列がそれぞれの部門。<b>3時間の部は14:15に終わってからは自由</b>で、そこは1つのまとまりにしてある。
     </p>
 
     <div class="tl2-scroll">
@@ -338,38 +340,37 @@ td strong{font-weight:700}
 
         <div class="tt big">14:15</div>
         <div class="a idle">競技中</div>
-        <div class="b mark">解散 — ここから自由。先に風呂へ行くのも、別の場所へ行くのも、そのまま解散でもいい</div>
+        <div class="free">
+          <span class="big">自由</span>
+          <span class="note">（一緒に銭湯へ行っても、大宮で合流でも、どちらでも大丈夫）</span>
+        </div>
 
         <div class="tt">14:45</div>
         <div class="a">ゴール</div>
-        <div class="b idle">自由</div>
 
         <div class="tt">15:00</div>
         <div class="a">表彰式（15:00–15:15）</div>
-        <div class="b idle">自由</div>
 
         <div class="tt big">15:15</div>
         <div class="a mark">解散</div>
-        <div class="b idle">自由</div>
 
         <div class="tt big">15:25</div>
-        <div class="both"><b>ロッカーで荷物回収</b> — 合流するならここ（会場から南改札 西口通路まで徒歩10分）</div>
+        <div class="a"><b>ロッカーで荷物回収</b>（会場から南改札 西口通路まで徒歩10分）</div>
 
         <div class="tt">15:40</div>
-        <div class="both">渋谷発 — 湘南新宿ライン（3・4番線は南改札から）</div>
+        <div class="a">渋谷発 — 湘南新宿ライン（3・4番線は南改札から）</div>
 
         <div class="tt">16:02</div>
-        <div class="both">赤羽 着 → 北口からタクシー4〜5分</div>
+        <div class="a">赤羽 着 → 北口からタクシー4〜5分</div>
 
         <div class="tt big">16:10</div>
-        <div class="both"><b>テルメ末広</b> — 50分ほど</div>
+        <div class="a mark">テルメ末広 — 50分ほど</div>
 
         <div class="tt">17:00</div>
-        <div class="both">出発 → 赤羽 17:07</div>
+        <div class="a">出発 → 赤羽 17:07</div>
 
         <div class="tt">17:15</div>
         <div class="a">赤羽発 — 湘南新宿ライン</div>
-        <div class="b idle">ここで解散（大宮まで同行してもいい）</div>
 
         <div class="tt">17:30</div>
         <div class="a">大宮 着</div>
